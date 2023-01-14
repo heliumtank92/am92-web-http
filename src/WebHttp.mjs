@@ -11,9 +11,10 @@ const DEFAULT_CONFIG = {
 }
 
 export default class WebHttp {
-  constructor (CONFIG = {}) {
+  constructor (CONFIG = {}, webHttpConfig = {}) {
     // Configurations
     const config = { ...DEFAULT_CONFIG, ...CONFIG }
+    this.webHttpConfig = webHttpConfig
 
     // Create Axios Instance & Attach Axios Retry
     this.client = axios.create(config)
@@ -49,8 +50,10 @@ export default class WebHttp {
 
   async request (options = {}) {
     try {
+      const { webHttpConfig = {} } = options
       options.webHttpContext = this.context
-      options.webHttpConfig = {}
+      options.webHttpConfig = { ...this.webHttpConfig, ...webHttpConfig }
+
       const response = await this.client.request(options)
       return response
     } catch (error) { }
