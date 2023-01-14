@@ -37,10 +37,12 @@ async function responseSuccess (response) {
 
   // Extract Encrypted Data
   const { data } = body
-  const { payload } = data
-  // Decrypt Data
-  const decryptedData = await JoseCryptoSubtle.decryptData(payload, webHttpConfig.encryptionKey)
-  response.data = decryptedData
+  if (data) {
+    const { payload } = data
+    // Decrypt Data
+    const decryptedData = await JoseCryptoSubtle.decryptData(payload, webHttpConfig.encryptionKey)
+    response.data = decryptedData
+  }
 
   return response
 }
