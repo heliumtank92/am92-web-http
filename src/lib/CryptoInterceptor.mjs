@@ -9,7 +9,7 @@ const CryptoInterceptor = {
 export default CryptoInterceptor
 
 async function requestSuccess (config) {
-  const { webHttpContext, webHttpConfig, data = {} } = config
+  const { webHttpContext, webHttpConfig, data } = config
   const publicKey = webHttpContext.get(CONTEXT.PUBLIC_KEY)
 
   if (webHttpConfig.disableCrypto) { return config }
@@ -20,8 +20,10 @@ async function requestSuccess (config) {
   config.webHttpConfig.encryptedEncryptionKey = encryptedEncryptionKey
 
   // Encrypt Body
-  const payload = await JoseCryptoSubtle.encryptData(data, encryptionKey)
-  config.data = { payload }
+  if (data) {
+    const payload = await JoseCryptoSubtle.encryptData(data, encryptionKey)
+    config.data = { payload }
+  }
 
   // Return Config
   return config
@@ -34,9 +36,8 @@ async function responseSuccess (response) {
   if (webHttpConfig.disableCrypto) { return response }
 
   // Extract Encrypted Data
-  const { data = {} } = body
+  const { data } = body
   const { payload } = data
-
   // Decrypt Data
   const decryptedData = await JoseCryptoSubtle.decryptData(payload, webHttpConfig.encryptionKey)
   response.data = decryptedData

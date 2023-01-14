@@ -30,16 +30,7 @@ export default class WebHttp {
       [CONTEXT.CLIENT_ID, 'BROWSER']
     ])
 
-    this.interceptors = {
-      request: {
-        use: this.client.interceptors.request.use.bind(this.client),
-        eject: this.client.interceptors.request.eject.bind(this.client)
-      },
-      response: {
-        use: this.client.interceptors.response.use.bind(this.client),
-        eject: this.client.interceptors.response.eject.bind(this.client)
-      }
-    }
+    this.interceptors = this.client.interceptors
 
     // Use Default Interceptors
     this.#useDefaultInterceptors()
@@ -54,16 +45,19 @@ export default class WebHttp {
       options.webHttpContext = this.context
       options.webHttpConfig = { ...this.webHttpConfig, ...webHttpConfig }
 
+      console.log('options.webHttpConfig', options.webHttpConfig)
       const response = await this.client.request(options)
       return response
-    } catch (error) { }
+    } catch (error) {
+      console.log('error', error)
+    }
   }
 
   #useDefaultInterceptors () {
-    this.interceptors.request.use(...CryptoInterceptor.request)
-    this.interceptors.response.use(...CryptoInterceptor.response)
-
     this.interceptors.request.use(...HeaderInterceptor.request)
     this.interceptors.response.use(...HeaderInterceptor.response)
+
+    this.interceptors.request.use(...CryptoInterceptor.request)
+    this.interceptors.response.use(...CryptoInterceptor.response)
   }
 }

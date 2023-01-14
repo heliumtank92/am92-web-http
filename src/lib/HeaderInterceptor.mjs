@@ -12,7 +12,7 @@ export default HeaderInterceptor
 function requestSuccess (config) {
   const {
     webHttpContext,
-    webHttpCconfig: {
+    webHttpConfig: {
       encryptedEncryptionKey = ''
     } = {}
   } = config
@@ -23,6 +23,7 @@ function requestSuccess (config) {
   config.headers[HEADERS.REQ.ACCESS_TOKEN] = webHttpContext.get(CONTEXT.ACCESS_TOKEN)
   config.headers[HEADERS.REQ.ENCRYPTION_KEY] = encryptedEncryptionKey
   config.headers[HEADERS.REQ.CLIENT_ID] = webHttpContext.get(CONTEXT.CLIENT_ID)
+  return config
 }
 
 function responseSuccess (response) {
