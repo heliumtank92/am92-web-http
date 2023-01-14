@@ -1,5 +1,7 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
+import { v4 } from 'uuid'
+
 import CONTEXT from './CONSTANTS/CONTEXT.mjs'
 import CryptoInterceptor from './lib/CryptoInterceptor.mjs'
 import HeaderInterceptor from './lib/HeaderInterceptor.mjs'
@@ -19,7 +21,7 @@ export default class WebHttp {
 
     // WebHttp Context for all request at session level
     this.context = new Map([
-      [CONTEXT.SESSION_ID, ''],
+      [CONTEXT.SESSION_ID, v4().replaceAll('-', '')],
       [CONTEXT.API_KEY, ''],
       [CONTEXT.ACCESS_TOKEN, ''],
       [CONTEXT.REFRESH_TOKEN, ''],
