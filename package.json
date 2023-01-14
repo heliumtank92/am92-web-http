@@ -32,7 +32,7 @@
     "./CONTEXT": "./src/CONSTANTS/CONTEXT.mjs"
   },
   "dependencies": {
-    "@am92/jose-crypto-subtle": "^0.0.1",
+    "@am92/jose-crypto-subtle": "^0.0.2",
     "axios": "^1.2.2",
     "axios-retry": "^3.3.1",
     "uuid": "^9.0.0"
