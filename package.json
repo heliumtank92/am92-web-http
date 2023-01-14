@@ -1,0 +1,44 @@
+{
+  "name": "@am92/web-http",
+  "version": "0.0.1",
+  "description": "HTTP Client for Web Frontend Applications",
+  "type": "module",
+  "main": "src/WebHttp.mjs",
+  "module": "src/WebHttp.mjs",
+  "scripts": {
+    "test": "echo 'Error: no test specified'",
+    "preversion": "pnpm test",
+    "version": "echo 'Versioning'",
+    "postversion": "git push && git push --tags"
+  },
+  "repository": "git@github.com:heliumtank92/am92-web-http.git",
+  "homepage": "https://github.com/heliumtank92/am92-web-http#readme",
+  "contributors": [
+    {
+      "name": "Ankit Gandhi",
+      "email": "ankitgandhi452@gmail.com",
+      "url": "https://github.com/ankitgandhi452"
+    },
+    {
+      "name": "Mehul Agarwal",
+      "email": "agarwalmehul92@gmail.com",
+      "url": "https://github.com/agarwalmehul"
+    }
+  ],
+  "license": "MIT",
+  "exports": {
+    ".": "./src/WebHttp.mjs"
+  },
+  "dependencies": {
+    "axios": "^1.2.2",
+    "axios-retry": "^3.3.1"
+  },
+  "keywords": [
+    "web http",
+    "axios",
+    "http",
+    "http client",
+    "request",
+    "response"
+  ]
+}
