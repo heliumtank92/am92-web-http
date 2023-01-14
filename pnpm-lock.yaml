@@ -1,14 +1,20 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@am92/jose-crypto-subtle': ^0.0.1
   axios: ^1.2.2
   axios-retry: ^3.3.1
 
 dependencies:
+  '@am92/jose-crypto-subtle': 0.0.1
   axios: 1.2.2
   axios-retry: 3.3.1
 
 packages:
+
+  /@am92/jose-crypto-subtle/0.0.1:
+    resolution: {integrity: sha512-/D9jFgkaPAAwELRnMhjIdeJpxU6VoBsdVk0rga3c/CfLN0uRIXgBmUnqspy8Y9eFd2TZcVHWOIQWcxqhROGJeQ==}
+    dev: false
 
   /@babel/runtime/7.20.7:
     resolution: {integrity: sha512-UF0tvkUtxwAgZ5W/KrkHf0Rn0fdnLDU9ScxBrEVNUprE/MzirjK4MJUX1/BVDv00Sv8cljtukVK1aky++X1SjQ==}

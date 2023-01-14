@@ -30,6 +30,7 @@
     ".": "./src/WebHttp.mjs"
   },
   "dependencies": {
+    "@am92/jose-crypto-subtle": "^0.0.1",
     "axios": "^1.2.2",
     "axios-retry": "^3.3.1"
   },
