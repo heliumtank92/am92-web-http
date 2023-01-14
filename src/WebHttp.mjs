@@ -5,6 +5,18 @@ const DEFAULT_CONFIG = {
   retryDelay: axiosRetry.exponentialDelay
 }
 
+// In WebHttp Scope:
+// - ApiKey
+// - PublicKey
+// - AuthToken
+// - RefreshToken
+// - SessionId
+// - ClientId
+
+// In Request Scope:
+// - Request Id
+// - Encryption Keys
+
 export default class WebHttp {
   constructor (CONFIG = {}) {
     // Configurations
@@ -14,10 +26,10 @@ export default class WebHttp {
     this.client = axios.create(config)
     axiosRetry(this.client, config)
 
-    this.interceptors = {
-      request: { use: this.client.interceptors.request.use },
-      response: { use: this.client.interceptors.response.use }
-    }
+    // this.interceptors = {
+    //   request: { use: this.client.interceptors.request.use },
+    //   response: { use: this.client.interceptors.response.use }
+    // }
 
     // Use Request & Response Interceptors to Axios Client
     this.useRequestInterceptor = this.useRequestInterceptor.bind(this)

@@ -1,8 +1,8 @@
 import JoseCryptoSubtle from '@am92/jose-crypto-subtle'
 
 const CryptoInterceptor = {
-  request: [requestSuccess, requestError],
-  response: [responseSuccess, responseError]
+  request: [requestSuccess],
+  response: [responseSuccess]
 }
 
 export default CryptoInterceptor
@@ -16,15 +16,26 @@ async function requestSuccess (config) {
   config.webHttp.encryptedEncryptionKey = encryptedEncryptionKey
 
   // Encrypt Body
-  const payload = await JoseCryptoSubtle.encryptData(data, encryptionKey)
-  config.data = { payload }
+  if (data) {
+    const payload = await JoseCryptoSubtle.encryptData(data, encryptionKey)
+    config.data = { payload }
+  }
 
   // Return Config
   return config
 }
 
-function requestError (error) { }
+async function responseSuccess (response) {
+  const { config = {}, data: body = {} } = response
+  const { webHttp: { encryptionKey } = {} } = config
 
-function responseSuccess (response) { }
+  // Extract Encrypted Data
+  const { data = {} } = body
+  const { payload } = data
 
-function responseError (error) { }
+  // Decrypt Data
+  const decryptedData = await JoseCryptoSubtle.decryptData(payload, encryptionKey)
+  response.data = decryptedData
+
+  return response
+}
