@@ -4,11 +4,13 @@ specifiers:
   '@am92/jose-crypto-subtle': ^0.0.1
   axios: ^1.2.2
   axios-retry: ^3.3.1
+  uuid: ^9.0.0
 
 dependencies:
   '@am92/jose-crypto-subtle': 0.0.1
   axios: 1.2.2
   axios-retry: 3.3.1
+  uuid: 9.0.0
 
 packages:
 
@@ -98,4 +100,9 @@ packages:
 
   /regenerator-runtime/0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
+    dev: false
+
+  /uuid/9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
     dev: false

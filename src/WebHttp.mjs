@@ -1,5 +1,7 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
+import CryptoInterceptor from './lib/CryptoInterceptor.mjs'
+import HeaderInterceptor from './lib/HeaderInterceptor.mjs'
 
 const DEFAULT_CONFIG = {
   retryDelay: axiosRetry.exponentialDelay
@@ -26,6 +28,8 @@ export default class WebHttp {
     this.client = axios.create(config)
     axiosRetry(this.client, config)
 
+    this.context = new Map()
+
     // this.interceptors = {
     //   request: { use: this.client.interceptors.request.use },
     //   response: { use: this.client.interceptors.response.use }
@@ -48,12 +52,19 @@ export default class WebHttp {
 
   async request (options = {}) {
     try {
+      options.webHttpContext = this.context
       const response = await this.client.request(options)
       return response
     } catch (error) { }
   }
 
-  #useDefaultInterceptors () { }
+  #useDefaultInterceptors () {
+    this.useRequestInterceptor(...CryptoInterceptor.request)
+    this.useResponseInterceptor(...CryptoInterceptor.response)
+
+    this.useRequestInterceptor(...HeaderInterceptor.request)
+    this.useResponseInterceptor(...HeaderInterceptor.response)
+  }
 
   useRequestInterceptor (interceptor = []) {
     if (interceptor.length) {
