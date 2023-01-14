@@ -1,4 +1,5 @@
 import JoseCryptoSubtle from '@am92/jose-crypto-subtle'
+import CONTEXT from '../CONSTANTS/CONTEXT.mjs'
 
 const CryptoInterceptor = {
   request: [requestSuccess],
@@ -9,11 +10,10 @@ export default CryptoInterceptor
 
 async function requestSuccess (config) {
   const { webHttpContext, data = {} } = config
-  const publicKey = webHttpContext.get('publicKey')
+  const publicKey = webHttpContext.get(CONTEXT.PUBLIC_KEY)
 
   // Generate and Manage Keys
   const { encryptionKey, encryptedEncryptionKey } = await JoseCryptoSubtle.generateAndWrapKey(publicKey)
-  config.webHttpConfig = config.webHttpConfig || {}
   config.webHttpConfig.encryptionKey = encryptionKey
   config.webHttpConfig.encryptedEncryptionKey = encryptedEncryptionKey
 

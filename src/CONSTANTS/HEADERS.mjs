@@ -1,16 +1,16 @@
-export const ACCESS_TOKEN_REQUEST_HEADER_KEY = 'X-Access-Token'
-export const ACCESS_TOKEN_RESPONSE_HEADER_KEY = 'X-Access-Token'
+const HEADERS = {
+  REQ: {
+    SESSION_ID: 'x-session-id',
+    REQUEST_ID: 'x-request-id',
+    API_KEY: 'x-api-key',
+    ACCESS_TOKEN: 'x-access-token',
+    ENCRYPTION_KEY: 'x-api-encryption-key',
+    CLIENT_ID: 'x-api-client-id'
+  },
+  RES: {
+    ACCESS_TOKEN: 'x-access-token',
+    REFRESH_TOKEN: 'x-refresh-token'
+  }
+}
 
-export const SESSION_ID_REQUEST_HEADER_KEY = 'X-Session-ID'
-export const SESSION_ID_RESPONSE_HEADER_KEY = 'X-Session-ID'
-
-export const REQUEST_ID_REQUEST_HEADER_KEY = 'X-Request-ID'
-
-export const API_KEY_REQUEST_HEADER_KEY = 'X-API-Key'
-
-export const APP_UID_REQUEST_HEADER_KEY = 'X-App-UID'
-export const APP_UID_RESPONSE_HEADER_KEY = 'X-App-UID'
-
-export const ENCRYPTION_KEY_REQUEST_HEADER_KEY = 'X-API-Encryption-Key'
-export const CLIENT_ID_REQUEST_HEADER_KEY = 'X-API-Client-Id'
-export const CLIENT_ID_REQUEST_HEADER_VALUE = 'BROWSER'
+export default HEADERS

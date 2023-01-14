@@ -1,30 +1,6 @@
 import { v4 } from 'uuid'
-import {
-  SESSION_ID_REQUEST_HEADER_KEY,
-  SESSION_ID_RESPONSE_HEADER_KEY,
-
-  REQUEST_ID_REQUEST_HEADER_KEY,
-
-  API_KEY_REQUEST_HEADER_KEY,
-
-  ACCESS_TOKEN_REQUEST_HEADER_KEY,
-  ACCESS_TOKEN_RESPONSE_HEADER_KEY,
-
-  ENCRYPTION_KEY_REQUEST_HEADER_KEY,
-
-  CLIENT_ID_REQUEST_HEADER_KEY,
-
-  APP_UID_REQUEST_HEADER_KEY,
-  APP_UID_RESPONSE_HEADER_KEY
-} from '../CONSTANTS/HEADERS.mjs'
-
-import {
-  ACCESS_TOKEN_CONTEXT_KEY,
-  SESSION_ID_CONTEXT_KEY,
-  API_KEY_CONTEXT_KEY,
-  APP_UID_CONTEXT_KEY,
-  CLIENT_ID_CONTEXT_KEY
-} from '../CONSTANTS/CONTEXT.mjs'
+import HEADERS from '../CONSTANTS/HEADERS.mjs'
+import CONTEXT from '../CONSTANTS/CONTEXT.mjs'
 
 const HeaderInterceptor = {
   request: [requestSuccess],
@@ -41,13 +17,12 @@ function requestSuccess (config) {
     } = {}
   } = config
 
-  config.headers[SESSION_ID_REQUEST_HEADER_KEY] = webHttpContext.get(SESSION_ID_CONTEXT_KEY)
-  config.headers[REQUEST_ID_REQUEST_HEADER_KEY] = v4().replaceAll('-', '')
-  config.headers[API_KEY_REQUEST_HEADER_KEY] = webHttpContext.get(API_KEY_CONTEXT_KEY)
-  config.headers[ACCESS_TOKEN_REQUEST_HEADER_KEY] = webHttpContext.get(ACCESS_TOKEN_CONTEXT_KEY)
-  config.headers[ENCRYPTION_KEY_REQUEST_HEADER_KEY] = encryptedEncryptionKey
-  config.headers[CLIENT_ID_REQUEST_HEADER_KEY] = webHttpContext.get(CLIENT_ID_CONTEXT_KEY)
-  config.headers[APP_UID_REQUEST_HEADER_KEY] = webHttpContext.get(APP_UID_CONTEXT_KEY)
+  config.headers[HEADERS.REQ.SESSION_ID] = webHttpContext.get(CONTEXT.SESSION_ID)
+  config.headers[HEADERS.REQ.REQUEST_ID] = v4().replaceAll('-', '')
+  config.headers[HEADERS.REQ.API_KEY] = webHttpContext.get(CONTEXT.API_KEY)
+  config.headers[HEADERS.REQ.ACCESS_TOKEN] = webHttpContext.get(CONTEXT.ACCESS_TOKEN)
+  config.headers[HEADERS.REQ.ENCRYPTION_KEY] = encryptedEncryptionKey
+  config.headers[HEADERS.REQ.CLIENT_ID] = webHttpContext.get(CONTEXT.CLIENT_ID)
 }
 
 function responseSuccess (response) {
@@ -68,12 +43,9 @@ function responseError (error) {
 }
 
 function _extractResponseHeaders (webHttpContext, headers = {}) {
-  const sessionId = headers[SESSION_ID_RESPONSE_HEADER_KEY]
-  if (sessionId) { webHttpContext.set(SESSION_ID_CONTEXT_KEY, sessionId) }
+  const accessToken = headers[HEADERS.RES.ACCESS_TOKEN]
+  if (accessToken) { webHttpContext.set(CONTEXT.ACCESS_TOKEN, accessToken) }
 
-  const accessToken = headers[ACCESS_TOKEN_RESPONSE_HEADER_KEY]
-  if (accessToken) { webHttpContext.set(ACCESS_TOKEN_CONTEXT_KEY, accessToken) }
-
-  const appUid = headers[APP_UID_RESPONSE_HEADER_KEY]
-  if (appUid) { webHttpContext.set(APP_UID_CONTEXT_KEY, appUid) }
+  const refreshToken = headers[HEADERS.RES.ACCESS_TOKEN]
+  if (refreshToken) { webHttpContext.set(CONTEXT.REFRESH_TOKEN, refreshToken) }
 }

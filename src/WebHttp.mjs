@@ -1,23 +1,12 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
+import CONTEXT from './CONSTANTS/CONTEXT.mjs'
 import CryptoInterceptor from './lib/CryptoInterceptor.mjs'
 import HeaderInterceptor from './lib/HeaderInterceptor.mjs'
 
 const DEFAULT_CONFIG = {
   retryDelay: axiosRetry.exponentialDelay
 }
-
-// In WebHttp Scope:
-// - ApiKey
-// - PublicKey
-// - AuthToken
-// - RefreshToken
-// - SessionId
-// - ClientId
-
-// In Request Scope:
-// - Request Id
-// - Encryption Keys
 
 export default class WebHttp {
   constructor (CONFIG = {}) {
@@ -28,20 +17,26 @@ export default class WebHttp {
     this.client = axios.create(config)
     axiosRetry(this.client, config)
 
-    this.context = new Map()
+    // WebHttp Context for all request at session level
+    this.context = new Map([
+      [CONTEXT.SESSION_ID, ''],
+      [CONTEXT.API_KEY, ''],
+      [CONTEXT.ACCESS_TOKEN, ''],
+      [CONTEXT.REFRESH_TOKEN, ''],
+      [CONTEXT.PUBLIC_KEY, ''],
+      [CONTEXT.CLIENT_ID, 'BROWSER']
+    ])
 
-    // this.interceptors = {
-    //   request: { use: this.client.interceptors.request.use },
-    //   response: { use: this.client.interceptors.response.use }
-    // }
-
-    // Use Request & Response Interceptors to Axios Client
-    this.useRequestInterceptor = this.useRequestInterceptor.bind(this)
-    this.useResponseInterceptor = this.useResponseInterceptor.bind(this)
-
-    // Eject Request & Response Interceptors to Axios Client
-    this.ejectRequestInterceptor = this.ejectRequestInterceptor.bind(this)
-    this.ejectResponseInterceptor = this.ejectResponseInterceptor.bind(this)
+    this.interceptors = {
+      request: {
+        use: this.client.interceptors.request.use.bind(this.client),
+        eject: this.client.interceptors.request.eject.bind(this.client)
+      },
+      response: {
+        use: this.client.interceptors.response.use.bind(this.client),
+        eject: this.client.interceptors.response.eject.bind(this.client)
+      }
+    }
 
     // Use Default Interceptors
     this.#useDefaultInterceptors()
@@ -53,36 +48,17 @@ export default class WebHttp {
   async request (options = {}) {
     try {
       options.webHttpContext = this.context
+      options.webHttpConfig = {}
       const response = await this.client.request(options)
       return response
     } catch (error) { }
   }
 
   #useDefaultInterceptors () {
-    this.useRequestInterceptor(...CryptoInterceptor.request)
-    this.useResponseInterceptor(...CryptoInterceptor.response)
+    this.interceptors.request.use(...CryptoInterceptor.request)
+    this.interceptors.response.use(...CryptoInterceptor.response)
 
-    this.useRequestInterceptor(...HeaderInterceptor.request)
-    this.useResponseInterceptor(...HeaderInterceptor.response)
-  }
-
-  useRequestInterceptor (interceptor = []) {
-    if (interceptor.length) {
-      return this.client.interceptors.request.use(...interceptor)
-    }
-  }
-
-  useResponseInterceptor (interceptor = []) {
-    if (interceptor.length) {
-      return this.client.interceptors.response.use(...interceptor)
-    }
-  }
-
-  ejectRequestInterceptor (index) {
-    this.client.interceptors.request.eject(index)
-  }
-
-  ejectResponseInterceptor (index) {
-    this.client.interceptors.response.eject(index)
+    this.interceptors.request.use(...HeaderInterceptor.request)
+    this.interceptors.response.use(...HeaderInterceptor.response)
   }
 }

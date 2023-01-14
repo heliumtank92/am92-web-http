@@ -1,6 +1,6 @@
 {
   "name": "@am92/web-http",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "HTTP Client for Web Frontend Applications",
   "type": "module",
   "main": "src/WebHttp.mjs",
@@ -28,8 +28,8 @@
   "license": "MIT",
   "exports": {
     ".": "./src/WebHttp.mjs",
-    "CONSTANTS/CONTEXT": "./src/CONSTANTS/CONTEXT.mjs",
-    "CONSTANTS/HEADERS": "./src/CONSTANTS/HEADERS.mjs"
+    "./HEADERS": "./src/CONSTANTS/HEADERS.mjs",
+    "./CONTEXT": "./src/CONSTANTS/CONTEXT.mjs"
   },
   "dependencies": {
     "@am92/jose-crypto-subtle": "^0.0.1",
