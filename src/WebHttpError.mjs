@@ -8,13 +8,14 @@ export default class WebHttpError extends Error {
 
     super()
 
-    const { message, statusCode, errorCode = 'WEN_HTTP::UNKWON', data } = eMap || {}
+    const { message, statusCode, errorCode = 'WebHttp::UNKWON' } = eMap || {}
     const {
       message: eMessage,
       msg: eMsg,
       statusCode: eStatusCode,
       errorCode: eErrorCode,
-      code: eCode
+      code: eCode,
+      data
     } = e
 
     this._isCustomError = true
@@ -24,10 +25,6 @@ export default class WebHttpError extends Error {
     this.statusCode = statusCode || eStatusCode || DEFAULT_ERROR_STATUS_CODE
     this.errorCode = errorCode || eErrorCode || eCode || DEFAULT_ERROR_CODE
     this.data = data
-    this.error = {
-      ...e,
-      message: eMessage || this.message,
-      errorCode: this.errorCode
-    }
+    this.error = e
   }
 }
