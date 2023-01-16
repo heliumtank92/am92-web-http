@@ -1,6 +1,6 @@
 {
   "name": "@am92/web-http",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "HTTP Client for Web Frontend Applications",
   "type": "module",
   "main": "src/WebHttp.mjs",
