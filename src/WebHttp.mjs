@@ -53,7 +53,7 @@ export default class WebHttp {
       // Handle Axios Response Error
       if (response) {
         const { status, statusText, data: body } = response
-        const { statusCode, message, error, errorCode } = body
+        const { statusCode, message, error = {}, errorCode } = body
         const { publicKey } = error
 
         if (errorCode === 'ApiCrypto::PRIVATE_KEY_NOT_FOUND') {
