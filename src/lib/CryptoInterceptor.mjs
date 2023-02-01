@@ -9,6 +9,9 @@ const CryptoInterceptor = {
 export default CryptoInterceptor
 
 async function requestSuccess (config) {
+  const axiosRetry = config['axios-retry']
+  if (axiosRetry) { return config }
+
   const { webHttpContext, webHttpConfig, data } = config
   const publicKey = webHttpContext.get(CONTEXT.PUBLIC_KEY)
 

@@ -48,48 +48,41 @@ export default class WebHttp {
 
       const response = await this.client.request(options)
       return response
-    } catch (error) {
-      const { request, response } = error
+    } catch (e) {
+      const { request, response } = e
       // Handle Axios Response Error
       if (response) {
-        const { status, data: body } = response
-        const {
-          statusCode = 500,
-          message = 'Internal Server Error',
-          error: err = {}
-        } = body
-        const { errorCode, publicKey } = err
+        const { status, statusText, data: body } = response
+        const { statusCode, message, error = {}, errorCode } = body
+        const { publicKey } = error
 
-        if (errorCode === 'API_CRYPTO::PRIVATE_KEY_NOT_FOUND') {
+        if (errorCode === 'ApiCrypto::PRIVATE_KEY_NOT_FOUND') {
           this.context.set(CONTEXT.PUBLIC_KEY, publicKey)
           return await this.request(options)
         }
 
         const eMap = {
           statusCode: (statusCode || status),
-          message,
-          errorCode
+          message: (message || statusText)
         }
         throw new WebHttpError(body, eMap)
       }
 
       // Handle Axios Request Error
       if (request) {
-        const { message } = error
         const errorParams = {
           statusCode: -1,
-          message,
-          errorCode: 'WEN_HTTP::NETWORK'
+          errorCode: 'WebHttp::NETWORK'
         }
-        throw new WebHttpError(error, errorParams)
+        throw new WebHttpError(e, errorParams)
       }
 
       // Handle any other form of error
       const errorParams = {
         statusCode: -2,
-        errorCode: 'WEN_HTTP::UNKWON'
+        errorCode: 'WebHttp::UNKWON'
       }
-      throw new WebHttpError(error, errorParams)
+      throw new WebHttpError(e, errorParams)
     }
   }
 

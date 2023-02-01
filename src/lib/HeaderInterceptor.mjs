@@ -10,6 +10,9 @@ const HeaderInterceptor = {
 export default HeaderInterceptor
 
 function requestSuccess (config) {
+  const axiosRetry = config['axios-retry']
+  if (axiosRetry) { return config }
+
   const {
     webHttpContext,
     webHttpConfig: {
