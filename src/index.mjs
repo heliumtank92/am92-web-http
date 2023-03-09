@@ -1,8 +1,9 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
-import { v4 } from 'uuid'
+import v4 from 'uuid/v4'
 
 import CONTEXT from './CONSTANTS/CONTEXT.mjs'
+import HEADERS from './CONSTANTS/HEADERS.mjs'
 import CryptoInterceptor from './lib/CryptoInterceptor.mjs'
 import HeaderInterceptor from './lib/HeaderInterceptor.mjs'
 import WebHttpError from './WebHttpError.mjs'
@@ -94,3 +95,5 @@ export default class WebHttp {
     this.interceptors.response.use(...CryptoInterceptor.response)
   }
 }
+
+export { CONTEXT, HEADERS }

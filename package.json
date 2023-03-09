@@ -1,15 +1,33 @@
 {
   "name": "@am92/web-http",
-  "version": "0.0.9",
+  "version": "1.1.0",
   "description": "HTTP Client for Web Frontend Applications",
   "type": "module",
-  "main": "src/WebHttp.mjs",
-  "module": "src/WebHttp.mjs",
+  "exports": {
+    ".": {
+      "types": "./types/index.d.mts",
+      "import": "./src/index.mjs"
+    }
+  },
+  "types": "./types/index.d.mts",
+  "module": "./src/index.mjs",
+  "main": "./src/index.mjs",
+  "dependencies": {
+    "@am92/jose-crypto-subtle": "^0.0.2",
+    "axios": "^1.3.3",
+    "axios-retry": "^3.4.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.14.6"
+  },
   "scripts": {
     "test": "echo 'Error: no test specified'",
+    "generate:types": "rm -rf types && npx -p typescript tsc",
     "preversion": "pnpm test",
     "version": "echo 'Versioning'",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags && npm run publish:pkg",
+    "publish:pkg": "npm publish"
   },
   "repository": "git@github.com:heliumtank92/am92-web-http.git",
   "homepage": "https://github.com/heliumtank92/am92-web-http#readme",
@@ -25,18 +43,10 @@
       "url": "https://github.com/agarwalmehul"
     }
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "license": "MIT",
-  "exports": {
-    ".": "./src/WebHttp.mjs",
-    "./HEADERS": "./src/CONSTANTS/HEADERS.mjs",
-    "./CONTEXT": "./src/CONSTANTS/CONTEXT.mjs"
-  },
-  "dependencies": {
-    "@am92/jose-crypto-subtle": "^0.0.2",
-    "axios": "^1.2.2",
-    "axios-retry": "^3.3.1",
-    "uuid": "^9.0.0"
-  },
   "keywords": [
     "web http",
     "axios",
