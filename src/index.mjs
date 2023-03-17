@@ -1,6 +1,6 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
-import v4 from 'uuid/v4'
+import { v4 } from 'uuid'
 
 import CONTEXT from './CONSTANTS/CONTEXT.mjs'
 import HEADERS from './CONSTANTS/HEADERS.mjs'
