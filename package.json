@@ -13,7 +13,7 @@
   "module": "./src/index.mjs",
   "main": "./src/index.mjs",
   "dependencies": {
-    "@am92/jose-crypto-subtle": "^0.0.2",
+    "@am92/jose-crypto-subtle": "^0.0.7",
     "axios": "^1.3.3",
     "axios-retry": "^3.4.0",
     "uuid": "^9.0.0"
