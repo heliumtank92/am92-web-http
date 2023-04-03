@@ -16,9 +16,12 @@ function requestSuccess (config) {
   const {
     webHttpContext,
     webHttpConfig: {
+      disableHeaderInjection = false,
       encryptedEncryptionKey = ''
     } = {}
   } = config
+
+  if (disableHeaderInjection) { return config }
 
   config.headers[HEADERS.REQ.SESSION_ID] = webHttpContext.get(CONTEXT.SESSION_ID)
   config.headers[HEADERS.REQ.REQUEST_ID] = v4().replaceAll('-', '')
@@ -31,18 +34,26 @@ function requestSuccess (config) {
 
 function responseSuccess (response) {
   const { headers, config } = response
-  const { webHttpContext } = config
+  const { webHttpContext, webHttpConfig: { disableHeaderInjection = false } } = config
+
+  if (disableHeaderInjection) { return response }
+
   _extractResponseHeaders(webHttpContext, headers)
   return response
 }
 
 function responseError (error) {
   const { response, config } = error
+
   if (response) {
     const { headers } = response
-    const { webHttpContext } = config
-    _extractResponseHeaders(webHttpContext, headers)
+    const { webHttpContext, webHttpConfig: { disableHeaderInjection = false } } = config
+
+    if (!disableHeaderInjection) {
+      _extractResponseHeaders(webHttpContext, headers)
+    }
   }
+
   throw error
 }
 
