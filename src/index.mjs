@@ -69,7 +69,8 @@ export default class WebHttp {
 
         const eMap = {
           statusCode: (statusCode || status),
-          message: (message || statusText)
+          message: (message || statusText),
+          errorCode
         }
         throw new WebHttpError(body, eMap)
       }
