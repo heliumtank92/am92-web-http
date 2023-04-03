@@ -16,7 +16,7 @@ function requestSuccess (config) {
   const {
     webHttpContext,
     webHttpConfig: {
-      disableHeaderInjection = false,
+      disableHeaderInjection,
       encryptedEncryptionKey = ''
     } = {}
   } = config
@@ -34,7 +34,7 @@ function requestSuccess (config) {
 
 function responseSuccess (response) {
   const { headers, config } = response
-  const { webHttpContext, webHttpConfig: { disableHeaderInjection = false } } = config
+  const { webHttpContext, webHttpConfig: { disableHeaderInjection } } = config
 
   if (disableHeaderInjection) { return response }
 
@@ -47,7 +47,7 @@ function responseError (error) {
 
   if (response) {
     const { headers } = response
-    const { webHttpContext, webHttpConfig: { disableHeaderInjection = false } } = config
+    const { webHttpContext, webHttpConfig: { disableHeaderInjection } } = config
 
     if (!disableHeaderInjection) {
       _extractResponseHeaders(webHttpContext, headers)

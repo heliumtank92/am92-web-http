@@ -12,11 +12,16 @@ const DEFAULT_CONFIG = {
   retryDelay: axiosRetry.exponentialDelay
 }
 
+const DEFAULT_WEB_HTTP_CONFIG = {
+  disableCrypto: false,
+  disableHeaderInjection: false
+}
+
 export default class WebHttp {
-  constructor (CONFIG = {}, webHttpConfig = {}) {
+  constructor (CONFIG = {}, webHttpConfig = DEFAULT_WEB_HTTP_CONFIG) {
     // Configurations
     const config = { ...DEFAULT_CONFIG, ...CONFIG }
-    this.webHttpConfig = webHttpConfig
+    this.webHttpConfig = { ...DEFAULT_WEB_HTTP_CONFIG, ...webHttpConfig }
 
     // Create Axios Instance & Attach Axios Retry
     this.client = axios.create(config)
