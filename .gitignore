@@ -1,6 +1,7 @@
 # Node artifact files
 node_modules/
 .npm
+.yarn
 
 # Log files
 *.log
