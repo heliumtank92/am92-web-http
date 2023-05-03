@@ -1,6 +1,6 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
-import v4 from 'uuid/v4'
+import { v4 } from 'uuid'
 
 import CONTEXT from './CONSTANTS/CONTEXT.mjs'
 import HEADERS from './CONSTANTS/HEADERS.mjs'
@@ -12,11 +12,16 @@ const DEFAULT_CONFIG = {
   retryDelay: axiosRetry.exponentialDelay
 }
 
+const DEFAULT_WEB_HTTP_CONFIG = {
+  disableCrypto: false,
+  disableHeaderInjection: false
+}
+
 export default class WebHttp {
-  constructor (CONFIG = {}, webHttpConfig = {}) {
+  constructor (CONFIG = {}, webHttpConfig = DEFAULT_WEB_HTTP_CONFIG) {
     // Configurations
     const config = { ...DEFAULT_CONFIG, ...CONFIG }
-    this.webHttpConfig = webHttpConfig
+    this.webHttpConfig = { ...DEFAULT_WEB_HTTP_CONFIG, ...webHttpConfig }
 
     // Create Axios Instance & Attach Axios Retry
     this.client = axios.create(config)
@@ -64,7 +69,8 @@ export default class WebHttp {
 
         const eMap = {
           statusCode: (statusCode || status),
-          message: (message || statusText)
+          message: (message || statusText),
+          errorCode
         }
         throw new WebHttpError(body, eMap)
       }

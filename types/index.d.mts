@@ -1,6 +1,12 @@
 export default class WebHttp {
-    constructor(CONFIG?: {}, webHttpConfig?: {});
-    webHttpConfig: {};
+    constructor(CONFIG?: {}, webHttpConfig?: {
+        disableCrypto: boolean;
+        disableHeaderInjection: boolean;
+    });
+    webHttpConfig: {
+        disableCrypto: boolean;
+        disableHeaderInjection: boolean;
+    };
     client: import("axios").AxiosInstance;
     context: Map<string, any>;
     interceptors: {
