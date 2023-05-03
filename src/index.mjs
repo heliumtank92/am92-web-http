@@ -17,6 +17,7 @@ const DEFAULT_WEB_HTTP_CONFIG = {
   disableHeaderInjection: false
 }
 
+export { CONTEXT, HEADERS }
 export default class WebHttp {
   constructor (CONFIG = {}, webHttpConfig = DEFAULT_WEB_HTTP_CONFIG) {
     // Configurations
@@ -40,7 +41,7 @@ export default class WebHttp {
     this.interceptors = this.client.interceptors
 
     // Use Default Interceptors
-    this.#useDefaultInterceptors()
+    this._useDefaultInterceptors()
 
     // Bind Functions
     this.request = this.request.bind(this)
@@ -93,13 +94,17 @@ export default class WebHttp {
     }
   }
 
-  #useDefaultInterceptors () {
-    this.interceptors.request.use(...HeaderInterceptor.request)
-    this.interceptors.response.use(...HeaderInterceptor.response)
+  _useDefaultInterceptors = () => {
+    const { disableCrypto, disableHeaderInjection } = this.webHttpConfig
+    
+    if (!disableHeaderInjection) {
+      this.interceptors.request.use(...HeaderInterceptor.request)
+      this.interceptors.response.use(...HeaderInterceptor.response)
+    }
 
-    this.interceptors.request.use(...CryptoInterceptor.request)
-    this.interceptors.response.use(...CryptoInterceptor.response)
+    if (!disableCrypto) {
+      this.interceptors.request.use(...CryptoInterceptor.request)
+      this.interceptors.response.use(...CryptoInterceptor.response)
+    }
   }
 }
-
-export { CONTEXT, HEADERS }

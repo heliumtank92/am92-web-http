@@ -23,12 +23,17 @@ function requestSuccess (config) {
 
   if (disableHeaderInjection) { return config }
 
-  config.headers[HEADERS.REQ.SESSION_ID] = webHttpContext.get(CONTEXT.SESSION_ID)
+  _appendHeaderFormContext(HEADERS.REQ.SESSION_ID, CONTEXT.SESSION_ID)
+  _appendHeaderFormContext(HEADERS.REQ.API_KEY, CONTEXT.API_KEY)
+  _appendHeaderFormContext(HEADERS.REQ.ACCESS_TOKEN, CONTEXT.ACCESS_TOKEN)
+  _appendHeaderFormContext(HEADERS.REQ.CLIENT_ID, CONTEXT.CLIENT_ID)
+
   config.headers[HEADERS.REQ.REQUEST_ID] = v4().replaceAll('-', '')
-  config.headers[HEADERS.REQ.API_KEY] = webHttpContext.get(CONTEXT.API_KEY)
-  config.headers[HEADERS.REQ.ACCESS_TOKEN] = webHttpContext.get(CONTEXT.ACCESS_TOKEN)
-  config.headers[HEADERS.REQ.ENCRYPTION_KEY] = encryptedEncryptionKey
-  config.headers[HEADERS.REQ.CLIENT_ID] = webHttpContext.get(CONTEXT.CLIENT_ID)
+
+  if (encryptedEncryptionKey) {
+    config.headers[HEADERS.REQ.ENCRYPTION_KEY] = encryptedEncryptionKey
+  }
+  
   return config
 }
 
@@ -63,4 +68,13 @@ function _extractResponseHeaders (webHttpContext, headers = {}) {
 
   const refreshToken = headers[HEADERS.RES.ACCESS_TOKEN]
   if (refreshToken) { webHttpContext.set(CONTEXT.REFRESH_TOKEN, refreshToken) }
+}
+
+
+function _appendHeaderFormContext (headerKey, contextkey) {
+  const headerValue = webHttpContext.get(contextkey)
+
+  if (headerValue) {
+    config.headers[headerKey] = headerValue
+  }
 }
