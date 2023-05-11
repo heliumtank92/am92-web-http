@@ -7,12 +7,9 @@ export default class WebHttp {
         disableCrypto: boolean;
         disableHeaderInjection: boolean;
     };
-    client: import("axios").AxiosInstance;
+    client: any;
     context: any;
-    interceptors: {
-        request: import("axios").AxiosInterceptorManager<import("axios").InternalAxiosRequestConfig<any>>;
-        response: import("axios").AxiosInterceptorManager<import("axios").AxiosResponse<any, any>>;
-    };
+    interceptors: any;
     request(options?: {}): any;
     _useDefaultInterceptors: () => void;
 }
