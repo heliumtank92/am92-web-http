@@ -28,21 +28,25 @@ function requestSuccess(config) {
   }
 
   _appendHeaderFormContext(
+    config,
     webHttpContext,
     HEADERS.REQ.SESSION_ID,
     CONTEXT.SESSION_ID
   )
   _appendHeaderFormContext(
+    config,
     webHttpContext,
     HEADERS.REQ.API_KEY,
     CONTEXT.API_KEY
   )
   _appendHeaderFormContext(
+    config,
     webHttpContext,
     HEADERS.REQ.ACCESS_TOKEN,
     CONTEXT.ACCESS_TOKEN
   )
   _appendHeaderFormContext(
+    config,
     webHttpContext,
     HEADERS.REQ.CLIENT_ID,
     CONTEXT.CLIENT_ID
@@ -104,6 +108,7 @@ function _extractResponseHeaders(webHttpContext, headers = {}) {
 }
 
 function _appendHeaderFormContext(
+  config,
   webHttpContext,
   headerKey,
   contextkey
