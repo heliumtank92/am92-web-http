@@ -1,4 +1,4 @@
-import { v4 } from 'uuid'
+import { nanoid } from 'nanoid'
 import HEADERS from '../CONSTANTS/HEADERS.mjs'
 import CONTEXT from '../CONSTANTS/CONTEXT.mjs'
 
@@ -52,7 +52,7 @@ function requestSuccess (config) {
     CONTEXT.CLIENT_ID
   )
 
-  config.headers[HEADERS.REQ.REQUEST_ID] = v4().replaceAll('-', '')
+  config.headers[HEADERS.REQ.REQUEST_ID] = nanoid()
 
   if (encryptedEncryptionKey) {
     config.headers[HEADERS.REQ.ENCRYPTION_KEY] =
