@@ -10,6 +10,9 @@ dependencies:
   axios-retry:
     specifier: ^3.4.0
     version: 3.4.0
+  nanoid:
+    specifier: ^4.0.2
+    version: 4.0.2
   uuid:
     specifier: ^9.0.0
     version: 9.0.0
@@ -103,6 +106,12 @@ packages:
     engines: {node: '>= 0.6'}
     dependencies:
       mime-db: 1.52.0
+    dev: false
+
+  /nanoid@4.0.2:
+    resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
     dev: false
 
   /proxy-from-env@1.1.0:

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import axiosRetry from 'axios-retry'
-import { v4 } from 'uuid'
+import { nanoid } from 'nanoid'
 
 import CONTEXT from './CONSTANTS/CONTEXT.mjs'
 import HEADERS from './CONSTANTS/HEADERS.mjs'
@@ -30,7 +30,7 @@ export default class WebHttp {
 
     // WebHttp Context for all request at session level
     this.context = new Map([
-      [CONTEXT.SESSION_ID, v4().replaceAll('-', '')],
+      [CONTEXT.SESSION_ID, nanoid()],
       [CONTEXT.API_KEY, ''],
       [CONTEXT.ACCESS_TOKEN, ''],
       [CONTEXT.REFRESH_TOKEN, ''],
@@ -96,7 +96,7 @@ export default class WebHttp {
 
   _useDefaultInterceptors = () => {
     const { disableCrypto, disableHeaderInjection } = this.webHttpConfig
-    
+
     if (!disableHeaderInjection) {
       this.interceptors.request.use(...HeaderInterceptor.request)
       this.interceptors.response.use(...HeaderInterceptor.response)

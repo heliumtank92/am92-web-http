@@ -9,7 +9,7 @@ const HeaderInterceptor = {
 
 export default HeaderInterceptor
 
-function requestSuccess(config) {
+function requestSuccess (config) {
   const axiosRetry = config['axios-retry']
   if (axiosRetry) {
     return config
@@ -62,7 +62,7 @@ function requestSuccess(config) {
   return config
 }
 
-function responseSuccess(response) {
+function responseSuccess (response) {
   const { headers, config } = response
   const {
     webHttpContext,
@@ -77,7 +77,7 @@ function responseSuccess(response) {
   return response
 }
 
-function responseError(error) {
+function responseError (error) {
   const { response, config } = error
 
   if (response) {
@@ -95,7 +95,7 @@ function responseError(error) {
   throw error
 }
 
-function _extractResponseHeaders(webHttpContext, headers = {}) {
+function _extractResponseHeaders (webHttpContext, headers = {}) {
   const accessToken = headers[HEADERS.RES.ACCESS_TOKEN]
   if (accessToken) {
     webHttpContext.set(CONTEXT.ACCESS_TOKEN, accessToken)
@@ -107,7 +107,7 @@ function _extractResponseHeaders(webHttpContext, headers = {}) {
   }
 }
 
-function _appendHeaderFormContext(
+function _appendHeaderFormContext (
   config,
   webHttpContext,
   headerKey,

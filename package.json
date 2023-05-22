@@ -16,6 +16,7 @@
     "@am92/jose-crypto-subtle": "^1.1.0",
     "axios": "^1.4.0",
     "axios-retry": "^3.4.0",
+    "nanoid": "^4.0.2",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
