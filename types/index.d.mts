@@ -8,7 +8,7 @@ export default class WebHttp {
         disableHeaderInjection: boolean;
     };
     client: import("axios").AxiosInstance;
-    context: any;
+    context: Map<string, any>;
     interceptors: {
         request: import("axios").AxiosInterceptorManager<import("axios").InternalAxiosRequestConfig<any>>;
         response: import("axios").AxiosInterceptorManager<import("axios").AxiosResponse<any, any>>;

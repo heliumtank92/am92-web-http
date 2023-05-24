@@ -5,7 +5,7 @@ const HEADERS = {
     API_KEY: 'x-api-key',
     ACCESS_TOKEN: 'x-access-token',
     ENCRYPTION_KEY: 'x-api-encryption-key',
-    CLIENT_ID: 'x-api-client-id'
+    CLIENT_ID: 'x-client-id'
   },
   RES: {
     ACCESS_TOKEN: 'x-access-token',
