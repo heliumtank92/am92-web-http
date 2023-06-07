@@ -6,4 +6,5 @@ declare namespace CONTEXT {
     const REFRESH_TOKEN: string;
     const PUBLIC_KEY: string;
     const CLIENT_ID: string;
+    const AUTHENTICATION_TOKEN_KEY: string;
 }
