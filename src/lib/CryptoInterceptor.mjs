@@ -43,8 +43,30 @@ async function responseSuccess (response) {
   if (data) {
     const { payload } = data
     // Decrypt Data
-    const decryptedData = await JoseCryptoSubtle.decryptData(payload, webHttpConfig.encryptionKey)
+    const {
+      data: decryptedData,
+      statusCode,
+      status,
+      message,
+      error
+    } = await JoseCryptoSubtle.decryptData(payload, webHttpConfig.encryptionKey)
     response.data = decryptedData
+    response.status = statusCode
+    response.statusText = status
+    
+    // throw if status code is not 2xx
+    if (statusCode < 200 || statusCode >= 300) {
+      const err = new Error(message)
+      // mimic axios response error structure to be passed on to response error handler
+      response.data = {
+        status: statusCode,
+        statusText: status,
+        message,
+        error,
+      }
+      err.response = response
+      throw err
+    }
   }
 
   return response
