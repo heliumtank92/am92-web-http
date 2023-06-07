@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 lockfileVersion: '6.0'
 
 dependencies:
@@ -27,13 +28,53 @@ packages:
 
   /@babel/runtime@7.21.5:
     resolution: {integrity: sha512-8jI69toZqqcsnqGGqwGS4Qb1VwLOEp4hz+CXPywcvjs60u3B4Pom/U/7rm4W8tMOYEB+E9wgD0mW1l3r8qlI9Q==}
+=======
+lockfileVersion: '6.1'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  '@am92/jose-crypto-subtle':
+    specifier: ^0.0.2
+    version: 0.0.2
+  axios:
+    specifier: ^1.3.3
+    version: 1.3.3
+  axios-retry:
+    specifier: ^3.4.0
+    version: 3.4.0
+  uuid:
+    specifier: ^9.0.0
+    version: 9.0.0
+
+devDependencies:
+  '@types/node':
+    specifier: ^18.14.6
+    version: 18.14.6
+
+packages:
+
+  /@am92/jose-crypto-subtle@0.0.2:
+    resolution: {integrity: sha512-9e509R2KgTWOKi9+SWzeMbYSqA2QYk1AKeKX95jodrNPT2SRNG7rZ4qsyyAHtJJOe3zaKhRUg0mPN9l2fX77VQ==}
+    dev: false
+
+  /@babel/runtime@7.22.3:
+    resolution: {integrity: sha512-XsDuspWKLUsxwCp6r7EhsExHtYfbe5oAGQ19kqngTdCPUoPQzOPdUbD/pB9PJiwb2ptYKQDjSJT3R6dC+EPqfQ==}
+>>>>>>> 9ae7a25 (Encrypted Response Error Handling Added & Authentication Token Passing added support for x-auth-token key)
     engines: {node: '>=6.9.0'}
     dependencies:
       regenerator-runtime: 0.13.11
     dev: false
 
+<<<<<<< HEAD
   /@types/node@20.1.7:
     resolution: {integrity: sha512-WCuw/o4GSwDGMoonES8rcvwsig77dGCMbZDrZr2x4ZZiNW4P/gcoZXe/0twgtobcTkmg9TuKflxYL/DuwDyJzg==}
+=======
+  /@types/node@18.14.6:
+    resolution: {integrity: sha512-93+VvleD3mXwlLI/xASjw0FzKcwzl3OdTCzm1LaRfqgS21gfFtK3zDXM5Op9TeeMsJVOaJ2VRDpT9q4Y3d0AvA==}
+>>>>>>> 9ae7a25 (Encrypted Response Error Handling Added & Authentication Token Passing added support for x-auth-token key)
     dev: true
 
   /asynckit@0.4.0:
@@ -43,12 +84,21 @@ packages:
   /axios-retry@3.4.0:
     resolution: {integrity: sha512-VdgaP+gHH4iQYCCNUWF2pcqeciVOdGrBBAYUfTY+wPcO5Ltvp/37MLFNCmJKo7Gj3SHvCSdL8ouI1qLYJN3liA==}
     dependencies:
+<<<<<<< HEAD
       '@babel/runtime': 7.21.5
       is-retry-allowed: 2.2.0
     dev: false
 
   /axios@1.4.0:
     resolution: {integrity: sha512-S4XCWMEmzvo64T9GfvQDOXgYRDJ/wsSZc7Jvdgx5u1sd0JwsuPLqb3SYmusag+edF6ziyMensPVqLTSc1PiSEA==}
+=======
+      '@babel/runtime': 7.22.3
+      is-retry-allowed: 2.2.0
+    dev: false
+
+  /axios@1.3.3:
+    resolution: {integrity: sha512-eYq77dYIFS77AQlhzEL937yUBSepBfPIe8FcgEDN35vMNZKMrs81pgnyrQpwfy4NF4b4XWX1Zgx7yX+25w8QJA==}
+>>>>>>> 9ae7a25 (Encrypted Response Error Handling Added & Authentication Token Passing added support for x-auth-token key)
     dependencies:
       follow-redirects: 1.15.2
       form-data: 4.0.0
@@ -105,12 +155,15 @@ packages:
       mime-db: 1.52.0
     dev: false
 
+<<<<<<< HEAD
   /nanoid@4.0.2:
     resolution: {integrity: sha512-7ZtY5KTCNheRGfEFxnedV5zFiORN1+Y1N6zvPTnHQd8ENUvfaDBeuJDZb2bN/oXwXxu3qkTXDzy57W5vAmDTBw==}
     engines: {node: ^14 || ^16 || >=18}
     hasBin: true
     dev: false
 
+=======
+>>>>>>> 9ae7a25 (Encrypted Response Error Handling Added & Authentication Token Passing added support for x-auth-token key)
   /proxy-from-env@1.1.0:
     resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
@@ -118,3 +171,11 @@ packages:
   /regenerator-runtime@0.13.11:
     resolution: {integrity: sha512-kY1AZVr2Ra+t+piVaJ4gxaFaReZVH40AKNo7UCX6W+dEwBo/2oZJzqfuN1qLq1oL45o56cPaTXELwrTh8Fpggg==}
     dev: false
+<<<<<<< HEAD
+=======
+
+  /uuid@9.0.0:
+    resolution: {integrity: sha512-MXcSTerfPa4uqyzStbRoTgt5XIe3x5+42+q1sDuy3R5MDk66URdLMOZe5aPX/SQd+kuYAh0FdP/pO28IkQyTeg==}
+    hasBin: true
+    dev: false
+>>>>>>> 9ae7a25 (Encrypted Response Error Handling Added & Authentication Token Passing added support for x-auth-token key)
