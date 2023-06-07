@@ -1,5 +1,6 @@
 import JoseCryptoSubtle from '@am92/jose-crypto-subtle'
 import CONTEXT from '../CONSTANTS/CONTEXT.mjs'
+import { AxiosError } from 'axios'
 
 const CryptoInterceptor = {
   request: [requestSuccess],
@@ -8,17 +9,22 @@ const CryptoInterceptor = {
 
 export default CryptoInterceptor
 
-async function requestSuccess (config) {
+async function requestSuccess(config) {
   const axiosRetry = config['axios-retry']
-  if (axiosRetry) { return config }
+  if (axiosRetry) {
+    return config
+  }
 
   const { webHttpContext, webHttpConfig, data } = config
   const publicKey = webHttpContext.get(CONTEXT.PUBLIC_KEY)
 
-  if (webHttpConfig.disableCrypto) { return config }
+  if (webHttpConfig.disableCrypto) {
+    return config
+  }
 
   // Generate and Manage Keys
-  const { encryptionKey, encryptedEncryptionKey } = await JoseCryptoSubtle.generateAndWrapKey(publicKey)
+  const { encryptionKey, encryptedEncryptionKey } =
+    await JoseCryptoSubtle.generateAndWrapKey(publicKey)
   config.webHttpConfig.encryptionKey = encryptionKey
   config.webHttpConfig.encryptedEncryptionKey = encryptedEncryptionKey
 
@@ -32,20 +38,39 @@ async function requestSuccess (config) {
   return config
 }
 
-async function responseSuccess (response) {
+async function responseSuccess(response) {
   const { config = {}, data: body = {} } = response
   const { webHttpConfig } = config
 
-  if (webHttpConfig.disableCrypto) { return response }
+  if (webHttpConfig.disableCrypto) {
+    return response
+  }
 
   // Extract Encrypted Data
   const { data } = body
   if (data) {
     const { payload } = data
     // Decrypt Data
-    const decryptedData = await JoseCryptoSubtle.decryptData(payload, webHttpConfig.encryptionKey)
+    const decryptedData = await JoseCryptoSubtle.decryptData(
+      payload,
+      webHttpConfig.encryptionKey
+    )
     response.data = decryptedData
+    handleEncryptedErrorResponse(response)
   }
 
   return response
+}
+
+function handleEncryptedErrorResponse(response) {
+  const { data: body, config, request } = response
+  const { statusCode, status, message } = body
+  const { validateStatus } = config
+
+  const isValid = validateStatus(statusCode)
+
+  if (!isValid) {
+    const error = new AxiosError(status, statusCode, config, request, response)
+    throw error
+  }
 }

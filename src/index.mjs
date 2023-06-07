@@ -19,7 +19,7 @@ const DEFAULT_WEB_HTTP_CONFIG = {
 
 export { CONTEXT, HEADERS }
 export default class WebHttp {
-  constructor (CONFIG = {}, webHttpConfig = DEFAULT_WEB_HTTP_CONFIG) {
+  constructor(CONFIG = {}, webHttpConfig = DEFAULT_WEB_HTTP_CONFIG) {
     // Configurations
     const config = { ...DEFAULT_CONFIG, ...CONFIG }
     this.webHttpConfig = { ...DEFAULT_WEB_HTTP_CONFIG, ...webHttpConfig }
@@ -35,7 +35,8 @@ export default class WebHttp {
       [CONTEXT.ACCESS_TOKEN, ''],
       [CONTEXT.REFRESH_TOKEN, ''],
       [CONTEXT.PUBLIC_KEY, ''],
-      [CONTEXT.CLIENT_ID, 'BROWSER']
+      [CONTEXT.CLIENT_ID, 'BROWSER'],
+      [(CONTEXT.AUTHENTICATION_TOKEN_KEY, HEADERS.REQ.ACCESS_TOKEN)]
     ])
 
     this.interceptors = this.client.interceptors
@@ -47,7 +48,7 @@ export default class WebHttp {
     this.request = this.request.bind(this)
   }
 
-  async request (options = {}) {
+  async request(options = {}) {
     try {
       const { webHttpConfig = {} } = options
       options.webHttpContext = this.context
@@ -69,8 +70,8 @@ export default class WebHttp {
         }
 
         const eMap = {
-          statusCode: (statusCode || status),
-          message: (message || statusText),
+          statusCode: statusCode || status,
+          message: message || statusText,
           errorCode
         }
         throw new WebHttpError(body, eMap)
