@@ -1,5 +1,5 @@
 import JoseCryptoSubtle from '@am92/jose-crypto-subtle'
-import CONTEXT from '../CONSTANTS/CONTEXT.mjs'
+import CONTEXT from '../CONSTANTS/CONTEXT'
 import { AxiosError } from 'axios'
 
 const CryptoInterceptor = {

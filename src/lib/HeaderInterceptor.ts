@@ -1,6 +1,6 @@
-import { nanoid } from 'nanoid'
-import HEADERS from '../CONSTANTS/HEADERS.mjs'
-import CONTEXT from '../CONSTANTS/CONTEXT.mjs'
+import HEADERS from '../CONSTANTS/HEADERS'
+import CONTEXT from '../CONSTANTS/CONTEXT'
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
 
 const HeaderInterceptor = {
   request: [requestSuccess],
@@ -9,7 +9,7 @@ const HeaderInterceptor = {
 
 export default HeaderInterceptor
 
-function requestSuccess(config) {
+function requestSuccess(config: AxiosRequestConfig) {
   const axiosRetry = config['axios-retry']
   if (axiosRetry) {
     return config
@@ -23,6 +23,8 @@ function requestSuccess(config) {
   if (disableHeaderInjection) {
     return config
   }
+
+  config.headers = config.headers || {}
 
   _appendHeaderFormContext(
     config,
@@ -49,7 +51,7 @@ function requestSuccess(config) {
     CONTEXT.CLIENT_ID
   )
 
-  config.headers[HEADERS.REQ.REQUEST_ID] = nanoid()
+  config.headers[HEADERS.REQ.REQUEST_ID] = window.crypto.randomUUID()
 
   if (encryptedEncryptionKey) {
     config.headers[HEADERS.REQ.ENCRYPTION_KEY] = encryptedEncryptionKey
@@ -58,7 +60,7 @@ function requestSuccess(config) {
   return config
 }
 
-function responseSuccess(response) {
+function responseSuccess(response: AxiosResponse) {
   const { headers, config } = response
   const {
     webHttpContext,
@@ -73,7 +75,7 @@ function responseSuccess(response) {
   return response
 }
 
-function responseError(error) {
+function responseError(error: AxiosError) {
   const { response, config } = error
 
   if (response) {
