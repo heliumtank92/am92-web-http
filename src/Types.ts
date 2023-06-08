@@ -1,13 +1,28 @@
-import { AxiosRequestConfig, CreateAxiosDefaults } from 'axios'
-import { IAxiosRetryConfig } from 'axios-retry'
+import {
+  AxiosError,
+  AxiosResponse,
+  CreateAxiosDefaults,
+  InternalAxiosRequestConfig,
+  Method
+} from 'axios'
+import axiosRetry, { IAxiosRetryConfig } from 'axios-retry'
+import { WEB_HTTP_CONTEXT } from './CONSTANTS'
 
-export type Context = Map<string, string>
+export type WebHttpContext = Map<keyof typeof WEB_HTTP_CONTEXT, string>
 
-export interface Config extends CreateAxiosDefaults, IAxiosRetryConfig {}
+export interface WebHttpAxiosConfig
+  extends CreateAxiosDefaults,
+    IAxiosRetryConfig {}
+
+export const DefaultWebHttpAxiosConfig = {
+  retryDelay: axiosRetry.exponentialDelay
+}
+
 export type WebHttpConfig = {
   disableCrypto: boolean
   disableHeaderInjection: boolean
   encryptedEncryptionKey?: string
+  encryptionKey?: CryptoKey
 }
 
 export const DefaultWebHttpConfig = {
@@ -15,15 +30,32 @@ export const DefaultWebHttpConfig = {
   disableHeaderInjection: false
 }
 
-export type ErrorMap = {
-  statusCode?: number
-  message?: string
-  errorCode?: string
+export interface WebHttpRequestConfig extends InternalAxiosRequestConfig {}
+
+export interface WebHttpRequestOptions
+  extends Omit<
+    InternalAxiosRequestConfig,
+    'url' | 'method' | 'webHttpConfig' | 'webHttpContext'
+  > {
+  url: string
+  method: Method | string
+  webHttpConfig?: WebHttpConfig
+  webHttpContext?: WebHttpContext
+}
+
+export interface WebHttpResponse extends Omit<AxiosResponse, 'config'> {
+  config: WebHttpRequestConfig
+}
+
+export interface WebHttpAxiosError
+  extends Omit<AxiosError, 'config' | 'response'> {
+  config: WebHttpRequestConfig
+  response: WebHttpResponse
 }
 
 declare module 'axios' {
-  interface AxiosRequestConfig {
+  interface InternalAxiosRequestConfig {
     webHttpConfig: WebHttpConfig
-    webHttpContext: Context
+    webHttpContext: WebHttpContext
   }
 }
