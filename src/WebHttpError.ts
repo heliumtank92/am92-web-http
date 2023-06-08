@@ -6,14 +6,14 @@ const DEFAULT_ERROR_STATUS_CODE = 500
 const DEFAULT_ERROR_CODE = 'WebHttp::UNKWON'
 
 export default class WebHttpError extends Error {
-  readonly _isCustomError = true
-  readonly _isWebHttpError = true
-  readonly message: string
-  readonly statusCode: number
-  readonly errorCode: string
-  readonly code?: string
-  readonly data?: any
-  readonly error: any
+  _isCustomError = true
+  _isWebHttpError = true
+  message: string
+  statusCode: number
+  errorCode: string
+  code?: string
+  data?: any
+  error: any
 
   constructor(e?: AxiosError | any, eMap?: ErrorMap) {
     super()

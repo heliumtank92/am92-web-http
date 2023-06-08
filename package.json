@@ -15,13 +15,13 @@
     "build:clean": "rm -rf ./dist",
     "build": "npm-run-all build:clean compile",
     "test": "echo 'Error: no test specified'",
-    "preversion": "npm-run-all test",
+    "preversion": "npm-run-all build test",
     "version": "echo 'Versioning'",
     "postversion": "git push && git push --tags && npm run publish:pkg",
     "publish:pkg": "npm publish"
   },
   "dependencies": {
-    "@am92/jose-crypto-subtle": "^2.0.0",
+    "@am92/jose-crypto-subtle": "^2.0.1",
     "axios": "^1.4.0",
     "axios-retry": "^3.5.0"
   },
