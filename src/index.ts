@@ -14,11 +14,11 @@ import {
   WebHttpConfig,
   WebHttpRequestOptions,
   WebHttpResponse
-} from './TYPES'
+} from './Types'
 import { ErrorMap } from './INTERNAL_TYPES'
 import { WEB_HTTP_CONTEXT, WEB_HTTP_HEADERS } from './CONSTANTS'
 
-export * from './TYPES'
+export * from './Types'
 export * from './CONSTANTS'
 export { WebHttpError }
 export default class WebHttp {
