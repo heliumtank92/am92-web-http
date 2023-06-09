@@ -16,7 +16,7 @@ import {
   WebHttpResponse
 } from './TYPES'
 import { ErrorMap } from './INTERNAL_TYPES'
-import { WEB_HTTP_CONTEXT, WEB_HTTP_HEADERS } from './CONSTANTS'
+import { WEB_HTTP_CONTEXT_MAP, WEB_HTTP_HEADERS } from './CONSTANTS'
 
 export * from './TYPES'
 export * from './CONSTANTS'
@@ -41,14 +41,14 @@ export default class WebHttp {
 
     // WebHttp Context for all request at session level
     this.context = new Map([
-      [WEB_HTTP_CONTEXT.SESSION_ID, window.crypto.randomUUID()],
-      [WEB_HTTP_CONTEXT.API_KEY, ''],
-      [WEB_HTTP_CONTEXT.ACCESS_TOKEN, ''],
-      [WEB_HTTP_CONTEXT.REFRESH_TOKEN, ''],
-      [WEB_HTTP_CONTEXT.PUBLIC_KEY, ''],
-      [WEB_HTTP_CONTEXT.CLIENT_ID, 'BROWSER'],
+      [WEB_HTTP_CONTEXT_MAP.SESSION_ID, window.crypto.randomUUID()],
+      [WEB_HTTP_CONTEXT_MAP.API_KEY, ''],
+      [WEB_HTTP_CONTEXT_MAP.ACCESS_TOKEN, ''],
+      [WEB_HTTP_CONTEXT_MAP.REFRESH_TOKEN, ''],
+      [WEB_HTTP_CONTEXT_MAP.PUBLIC_KEY, ''],
+      [WEB_HTTP_CONTEXT_MAP.CLIENT_ID, 'BROWSER'],
       [
-        WEB_HTTP_CONTEXT.AUTHENTICATION_TOKEN_KEY,
+        WEB_HTTP_CONTEXT_MAP.AUTHENTICATION_TOKEN_KEY,
         WEB_HTTP_HEADERS.REQ.ACCESS_TOKEN
       ]
     ])
@@ -83,7 +83,7 @@ export default class WebHttp {
           const { publicKey } = error
 
           if (errorCode === 'ApiCrypto::PRIVATE_KEY_NOT_FOUND') {
-            this.context.set(WEB_HTTP_CONTEXT.PUBLIC_KEY, publicKey)
+            this.context.set(WEB_HTTP_CONTEXT_MAP.PUBLIC_KEY, publicKey)
             return await this.request(options)
           }
 

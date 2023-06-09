@@ -2,7 +2,7 @@ import { AxiosError } from 'axios'
 import JoseCryptoSubtle from '@am92/jose-crypto-subtle'
 
 import { WebHttpRequestConfig, WebHttpResponse } from '../TYPES'
-import { WEB_HTTP_CONTEXT } from '../CONSTANTS'
+import { WEB_HTTP_CONTEXT_MAP } from '../CONSTANTS'
 
 const CryptoInterceptor = {
   request: [requestSuccess],
@@ -18,7 +18,9 @@ async function requestSuccess(config: WebHttpRequestConfig) {
   }
 
   const { webHttpContext, webHttpConfig, data } = config
-  const publicKey = webHttpContext.get(WEB_HTTP_CONTEXT.PUBLIC_KEY) as string
+  const publicKey = webHttpContext.get(
+    WEB_HTTP_CONTEXT_MAP.PUBLIC_KEY
+  ) as string
 
   if (webHttpConfig.disableCrypto) {
     return config

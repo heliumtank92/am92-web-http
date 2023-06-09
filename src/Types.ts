@@ -7,9 +7,21 @@ import {
   Method
 } from 'axios'
 import axiosRetry, { IAxiosRetryConfig } from 'axios-retry'
-import { WEB_HTTP_CONTEXT } from './CONSTANTS'
 
-export type WebHttpContext = Map<keyof typeof WEB_HTTP_CONTEXT, string>
+export type WebHttpContextKeys =
+  | 'SESSION_ID'
+  | 'API_KEY'
+  | 'ACCESS_TOKEN'
+  | 'REFRESH_TOKEN'
+  | 'PUBLIC_KEY'
+  | 'CLIENT_ID'
+  | 'AUTHENTICATION_TOKEN_KEY'
+
+export type WebHttpContextMap = {
+  [key in WebHttpContextKeys]: WebHttpContextKeys
+}
+
+export type WebHttpContext = Map<WebHttpContextKeys, string>
 
 export interface WebHttpAxiosConfig
   extends CreateAxiosDefaults,
