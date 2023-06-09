@@ -1,5 +1,6 @@
 import {
   AxiosError,
+  AxiosRequestConfig,
   AxiosResponse,
   CreateAxiosDefaults,
   InternalAxiosRequestConfig,
@@ -34,7 +35,7 @@ export interface WebHttpRequestConfig extends InternalAxiosRequestConfig {}
 
 export interface WebHttpRequestOptions
   extends Omit<
-    InternalAxiosRequestConfig,
+    AxiosRequestConfig,
     'url' | 'method' | 'webHttpConfig' | 'webHttpContext'
   > {
   url: string
