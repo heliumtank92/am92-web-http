@@ -20,6 +20,7 @@ import { WEB_HTTP_CONTEXT, WEB_HTTP_HEADERS } from './CONSTANTS'
 
 export * from './TYPES'
 export * from './CONSTANTS'
+export { WebHttpError }
 export default class WebHttp {
   webHttpConfig: WebHttpConfig
   context: WebHttpContext
