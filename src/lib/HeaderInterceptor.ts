@@ -1,6 +1,6 @@
 import { RawAxiosResponseHeaders } from 'axios'
 
-import { WebHttpContext, WebHttpRequestConfig, WebHttpResponse } from '../Types'
+import { WebHttpContext, WebHttpRequestConfig, WebHttpResponse } from '../TYPES'
 import { WEB_HTTP_CONTEXT, WEB_HTTP_HEADERS } from '../CONSTANTS'
 
 const HeaderInterceptor = {
