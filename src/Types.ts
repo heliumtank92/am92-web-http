@@ -19,8 +19,8 @@ export const DefaultWebHttpAxiosConfig = {
 }
 
 export type WebHttpConfig = {
-  disableCrypto: boolean
-  disableHeaderInjection: boolean
+  disableCrypto?: boolean
+  disableHeaderInjection?: boolean
   encryptedEncryptionKey?: string
   encryptionKey?: CryptoKey
 }
