@@ -1,12 +1,7 @@
 import { RawAxiosResponseHeaders } from 'axios'
 
-import {
-  WebHttpContext,
-  WebHttpContextKeys,
-  WebHttpRequestConfig,
-  WebHttpResponse
-} from '../TYPES'
-import { WEB_HTTP_CONTEXT_MAP, WEB_HTTP_HEADERS } from '../CONSTANTS'
+import { WebHttpContext, WebHttpRequestConfig, WebHttpResponse } from '../TYPES'
+import { WEB_HTTP_CONTEXT, WEB_HTTP_HEADERS } from '../CONSTANTS'
 
 const HeaderInterceptor = {
   request: [requestSuccess],
@@ -36,25 +31,25 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
     config,
     webHttpContext,
     WEB_HTTP_HEADERS.REQ.SESSION_ID,
-    WEB_HTTP_CONTEXT_MAP.SESSION_ID
+    WEB_HTTP_CONTEXT.SESSION_ID
   )
   _appendHeaderFormContext(
     config,
     webHttpContext,
     WEB_HTTP_HEADERS.REQ.API_KEY,
-    WEB_HTTP_CONTEXT_MAP.API_KEY
+    WEB_HTTP_CONTEXT.API_KEY
   )
   _appendHeaderFormContext(
     config,
     webHttpContext,
-    webHttpContext.get(WEB_HTTP_CONTEXT_MAP.AUTHENTICATION_TOKEN_KEY) as string,
-    WEB_HTTP_CONTEXT_MAP.ACCESS_TOKEN
+    webHttpContext.get(WEB_HTTP_CONTEXT.AUTHENTICATION_TOKEN_KEY) as string,
+    WEB_HTTP_CONTEXT.ACCESS_TOKEN
   )
   _appendHeaderFormContext(
     config,
     webHttpContext,
     WEB_HTTP_HEADERS.REQ.CLIENT_ID,
-    WEB_HTTP_CONTEXT_MAP.CLIENT_ID
+    WEB_HTTP_CONTEXT.CLIENT_ID
   )
 
   config.headers[WEB_HTTP_HEADERS.REQ.REQUEST_ID] = window.crypto.randomUUID()
@@ -102,13 +97,13 @@ function _extractResponseHeaders(
 ) {
   const accessToken = headers[WEB_HTTP_HEADERS.RES.ACCESS_TOKEN] as string
   if (accessToken) {
-    webHttpContext.set(WEB_HTTP_CONTEXT_MAP.ACCESS_TOKEN, accessToken)
+    webHttpContext.set(WEB_HTTP_CONTEXT.ACCESS_TOKEN, accessToken)
   } else {
     const authToken = headers[WEB_HTTP_HEADERS.RES.AUTH_TOKEN] as string
     if (authToken) {
-      webHttpContext.set(WEB_HTTP_CONTEXT_MAP.ACCESS_TOKEN, authToken)
+      webHttpContext.set(WEB_HTTP_CONTEXT.ACCESS_TOKEN, authToken)
       webHttpContext.set(
-        WEB_HTTP_CONTEXT_MAP.AUTHENTICATION_TOKEN_KEY,
+        WEB_HTTP_CONTEXT.AUTHENTICATION_TOKEN_KEY,
         WEB_HTTP_HEADERS.REQ.AUTH_TOKEN
       )
     }
@@ -116,7 +111,7 @@ function _extractResponseHeaders(
 
   const refreshToken = headers[WEB_HTTP_HEADERS.RES.ACCESS_TOKEN] as string
   if (refreshToken) {
-    webHttpContext.set(WEB_HTTP_CONTEXT_MAP.REFRESH_TOKEN, refreshToken)
+    webHttpContext.set(WEB_HTTP_CONTEXT.REFRESH_TOKEN, refreshToken)
   }
 }
 
@@ -124,7 +119,7 @@ function _appendHeaderFormContext(
   config: WebHttpRequestConfig,
   webHttpContext: WebHttpContext,
   headerKey: string,
-  contextkey: WebHttpContextKeys
+  contextkey: keyof typeof WEB_HTTP_CONTEXT
 ) {
   const headerValue = webHttpContext.get(contextkey)
 

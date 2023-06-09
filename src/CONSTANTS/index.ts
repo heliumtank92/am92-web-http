@@ -1,2 +1,2 @@
-export * from './CONTEXT_MAP'
+export * from './CONTEXT'
 export * from './HEADERS'
