@@ -21,7 +21,7 @@
     "publish:pkg": "npm publish"
   },
   "dependencies": {
-    "@am92/jose-crypto-subtle": "^2.0.1",
+    "@am92/jose-crypto-subtle": "^2.0.2",
     "axios": "^1.4.0",
     "axios-retry": "^3.5.0"
   },

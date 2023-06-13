@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@am92/jose-crypto-subtle':
-    specifier: ^2.0.1
-    version: 2.0.1
+    specifier: ^2.0.2
+    version: 2.0.2
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -25,8 +25,8 @@ devDependencies:
 
 packages:
 
-  /@am92/jose-crypto-subtle@2.0.1:
-    resolution: {integrity: sha512-+A4HHrR4oI76jPJmMyqLRq/jn8sBIxOAV0MQKbv2kWjRaWrslHbgMvp8WL0hr4d5GsNqqb5dnOr38ir1FiMp8g==}
+  /@am92/jose-crypto-subtle@2.0.2:
+    resolution: {integrity: sha512-AFLlGIQl29VRf40sevbzoL6re2H4Htmr/Ej5lnC8qBYAdS+V6KZM+XYcBTspkroJZJcB2xqv+gWpIjDsY9fmRg==}
     dev: false
 
   /@babel/runtime@7.22.5:
