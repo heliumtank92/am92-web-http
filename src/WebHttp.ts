@@ -16,7 +16,7 @@ import {
   WebHttpResponse
 } from './TYPES'
 import { ErrorMap } from './INTERNAL_TYPES'
-import { WEB_HTTP_CONTEXT, WEB_HTTP_HEADERS } from './CONSTANTS'
+import { WEB_HTTP_CONTEXT, WEB_HTTP_REQ_HEADERS } from './CONSTANTS'
 
 export default class WebHttp {
   webHttpConfig: WebHttpConfig
@@ -46,7 +46,7 @@ export default class WebHttp {
       [WEB_HTTP_CONTEXT.CLIENT_ID, 'BROWSER'],
       [
         WEB_HTTP_CONTEXT.AUTHENTICATION_TOKEN_KEY,
-        WEB_HTTP_HEADERS.REQ.ACCESS_TOKEN
+        WEB_HTTP_REQ_HEADERS.ACCESS_TOKEN
       ]
     ])
 
