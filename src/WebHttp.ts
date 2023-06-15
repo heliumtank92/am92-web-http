@@ -25,7 +25,7 @@ import { WEB_HTTP_CONTEXT, WEB_HTTP_REQ_HEADERS } from './CONSTANTS'
  * @class
  * @typedef {WebHttp}
  */
-export class WebHttp {
+export default class WebHttp {
   /**
    * webHttpConfig initialized at WebHttp instance level for all API requests.
    */
