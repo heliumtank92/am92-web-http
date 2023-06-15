@@ -50,7 +50,6 @@ $ npm install --save @am92/web-http
 ## Resources
 * [Axios](https://www.npmjs.com/package/axios)
 * [Axios Retry](https://www.npmjs.com/package/axios-retry)
-* [Api Logger](https://www.npmjs.com/package/@am92/api-logger)
 
 <br />
 

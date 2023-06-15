@@ -1,9 +1,9 @@
-import axios from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
 
 import CryptoInterceptor from './lib/CryptoInterceptor'
 import HeaderInterceptor from './lib/HeaderInterceptor'
-import WebHttpError from './WebHttpError'
+import { WebHttpError } from './WebHttpError'
 
 import {
   DefaultWebHttpAxiosConfig,
@@ -13,17 +13,43 @@ import {
   WebHttpAxiosError,
   WebHttpConfig,
   WebHttpRequestOptions,
-  WebHttpResponse
+  WebHttpResponse,
+  WebHttpInterceptors
 } from './TYPES'
 import { ErrorMap } from './INTERNAL_TYPES'
 import { WEB_HTTP_CONTEXT, WEB_HTTP_REQ_HEADERS } from './CONSTANTS'
 
-export default class WebHttp {
+/**
+ * HTTP Client Class.
+ *
+ * @class
+ * @typedef {WebHttp}
+ */
+export class WebHttp {
+  /**
+   * webHttpConfig initialized at WebHttp instance level for all API requests.
+   */
   webHttpConfig: WebHttpConfig
+  /**
+   * WebHttpContext instance associated with WebHttp instance.
+   */
   context: WebHttpContext
-  client
-  interceptors
+  /**
+   * Axios client associated with WebHttp instance.
+   */
+  client: AxiosInstance
+  /**
+   * Axios interceptors attached to WebHttp instance for easier use.
+   */
+  interceptors: WebHttpInterceptors
 
+  /**
+   * Creates an instance of WebHttp.
+   *
+   * @constructor
+   * @param [webHttpAxiosConfig] axios and axios-retry config to be associated with the axios client.
+   * @param [webHttpConfig] webHttpConfig to be initialized at WebHttp instance level for all API requests.
+   */
   constructor(
     webHttpAxiosConfig?: WebHttpAxiosConfig,
     webHttpConfig?: WebHttpConfig
@@ -59,6 +85,14 @@ export default class WebHttp {
     this.request = this.request.bind(this)
   }
 
+  /**
+   * Method to make API call.
+   *
+   * @async
+   * @param options
+   * @throws {WebHttpError}
+   * @returns
+   */
   async request(options: WebHttpRequestOptions): Promise<WebHttpResponse> {
     const { webHttpConfig = {} } = options
     options.webHttpContext = this.context
@@ -111,6 +145,10 @@ export default class WebHttp {
     return response
   }
 
+  /**
+   * Internal function to initialize default axios interceptors.
+   * @private
+   */
   _useDefaultInterceptors() {
     const { disableCrypto, disableHeaderInjection } = this.webHttpConfig
 

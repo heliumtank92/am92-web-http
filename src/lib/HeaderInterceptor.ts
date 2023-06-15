@@ -7,6 +7,9 @@ import {
   WEB_HTTP_RES_HEADERS
 } from '../CONSTANTS'
 
+/**
+ * HeaderInterceptor has request-response interceptors for Axios Client.
+ */
 const HeaderInterceptor = {
   request: [requestSuccess],
   response: [responseSuccess, responseError]
@@ -14,6 +17,12 @@ const HeaderInterceptor = {
 
 export default HeaderInterceptor
 
+/**
+ * onFulfilled handler for Axios Request Interceptor.
+ *
+ * @param config
+ * @returns
+ */
 function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
   const axiosRetry = config['axios-retry']
   if (axiosRetry) {
@@ -65,6 +74,12 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
   return config
 }
 
+/**
+ * onFulfilled handler for Axios Response Interceptor.
+ *
+ * @param response
+ * @returns
+ */
 function responseSuccess(response: WebHttpResponse): WebHttpResponse {
   const { headers, config } = response
   const {
@@ -80,6 +95,12 @@ function responseSuccess(response: WebHttpResponse): WebHttpResponse {
   return response
 }
 
+/**
+ * onRejected handler for Axios Response Interceptor.
+ *
+ * @param error
+ * @returns
+ */
 function responseError(error: any): any {
   const { response, config } = error
   const { headers } = response
@@ -96,6 +117,13 @@ function responseError(error: any): any {
   throw error
 }
 
+/**
+ * Internal function to extract response headers.
+ *
+ * @param webHttpContext
+ * @param headers
+ * @private
+ */
 function _extractResponseHeaders(
   webHttpContext: WebHttpContext,
   headers: RawAxiosResponseHeaders
@@ -120,6 +148,15 @@ function _extractResponseHeaders(
   }
 }
 
+/**
+ * Internal function to inject request headers.
+ *
+ * @param config
+ * @param webHttpContext
+ * @param headerKey
+ * @param contextkey
+ * @private
+ */
 function _appendHeaderFormContext(
   config: WebHttpRequestConfig,
   webHttpContext: WebHttpContext,
