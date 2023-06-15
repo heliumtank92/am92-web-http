@@ -10,6 +10,8 @@ import {
 import axiosRetry, { IAxiosRetryConfig } from 'axios-retry'
 import { WEB_HTTP_CONTEXT } from './CONSTANTS'
 
+export { AxiosError }
+
 /**
  * Interface for WebHttpContext Map.
  *
@@ -90,10 +92,6 @@ export interface WebHttpRequestOptions
    * WebHttpConfig to be used exclusively for the given API request.
    */
   webHttpConfig?: WebHttpConfig
-  /**
-   * TODO: Remove from Request Options since a different context should not be passed.
-   */
-  webHttpContext?: WebHttpContext
 }
 
 /**
@@ -130,6 +128,17 @@ export interface WebHttpAxiosError
 }
 
 /**
+ * Type defination for error map to be passed to WebHttpError.
+ *
+ * @typedef {WebHttpErrorMap}
+ */
+export type WebHttpErrorMap = {
+  statusCode?: number
+  message?: string
+  errorCode?: string
+}
+
+/**
  * Interface for WebHttp interceptors
  *
  * @interface
@@ -146,6 +155,7 @@ export interface WebHttpInterceptors {
   response: AxiosInterceptorManager<WebHttpResponse>
 }
 
+/** @internal */
 declare module 'axios' {
   interface InternalAxiosRequestConfig {
     webHttpConfig: WebHttpConfig

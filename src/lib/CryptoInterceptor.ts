@@ -5,7 +5,8 @@ import { WebHttpRequestConfig, WebHttpResponse } from '../TYPES'
 import { WEB_HTTP_CONTEXT } from '../CONSTANTS'
 
 /**
- * CryptoInterceptor has request-response interceptors for Axios Client.
+ * Axios request-response interceptors for payload encryption using JOSE.
+ * @internal
  */
 const CryptoInterceptor = {
   request: [requestSuccess],
@@ -17,6 +18,7 @@ export default CryptoInterceptor
 /**
  * onFulfilled handler for Axios Request Interceptor.
  *
+ * @internal
  * @async
  * @param config
  * @returns
@@ -55,6 +57,7 @@ async function requestSuccess(
 /**
  * onFulfilled handler for Axios Response Interceptor.
  *
+ * @internal
  * @async
  * @param response
  * @returns
@@ -88,10 +91,10 @@ async function responseSuccess(
 /**
  * Internal function which handles Errors from Encrypted Response Body.
  *
+ * @internal
  * @param response
  * @returns
  * @throws {AxiosError}
- * @private
  */
 function handleEncryptedErrorResponse(response: WebHttpResponse): void {
   const { data: body, config, request } = response

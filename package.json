@@ -18,19 +18,22 @@
     "preversion": "npm-run-all build test",
     "version": "echo 'Versioning'",
     "postversion": "git push && git push --tags && npm run publish:pkg",
-    "publish:pkg": "npm publish"
+    "publish:pkg": "npm publish",
+    "generate:docs": "npx compodoc -p tsconfig.json"
   },
   "dependencies": {
-    "@am92/jose-crypto-subtle": "^2.0.2",
+    "@am92/jose-crypto-subtle": "^2.0.3",
     "axios": "^1.4.0",
     "axios-retry": "^3.5.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-methods": "^7.18.6",
+    "@compodoc/compodoc": "^1.1.21",
     "npm-run-all": "^4.1.5",
     "typescript": "^5.1.3"
   },
   "repository": "git@github.com:heliumtank92/am92-web-http.git",
-  "homepage": "https://github.com/heliumtank92/am92-web-http#readme",
+  "homepage": "https://heliumtank92.github.io/am92-web-http",
   "contributors": [
     {
       "name": "Ankit Gandhi",

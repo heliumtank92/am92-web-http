@@ -8,7 +8,8 @@ import {
 } from '../CONSTANTS'
 
 /**
- * HeaderInterceptor has request-response interceptors for Axios Client.
+ * Axios request-response interceptors for custom header injections.
+ * @internal
  */
 const HeaderInterceptor = {
   request: [requestSuccess],
@@ -20,6 +21,7 @@ export default HeaderInterceptor
 /**
  * onFulfilled handler for Axios Request Interceptor.
  *
+ * @internal
  * @param config
  * @returns
  */
@@ -77,6 +79,7 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
 /**
  * onFulfilled handler for Axios Response Interceptor.
  *
+ * @internal
  * @param response
  * @returns
  */
@@ -98,6 +101,7 @@ function responseSuccess(response: WebHttpResponse): WebHttpResponse {
 /**
  * onRejected handler for Axios Response Interceptor.
  *
+ * @internal
  * @param error
  * @returns
  */
@@ -120,9 +124,9 @@ function responseError(error: any): any {
 /**
  * Internal function to extract response headers.
  *
+ * @internal
  * @param webHttpContext
  * @param headers
- * @private
  */
 function _extractResponseHeaders(
   webHttpContext: WebHttpContext,
@@ -151,11 +155,11 @@ function _extractResponseHeaders(
 /**
  * Internal function to inject request headers.
  *
+ * @internal
  * @param config
  * @param webHttpContext
  * @param headerKey
  * @param contextkey
- * @private
  */
 function _appendHeaderFormContext(
   config: WebHttpRequestConfig,

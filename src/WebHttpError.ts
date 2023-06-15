@@ -1,8 +1,11 @@
 import { AxiosError } from 'axios'
-import { ErrorMap } from './INTERNAL_TYPES'
+import { WebHttpErrorMap } from './TYPES'
 
+/** @internal */
 const DEFAULT_ERROR_MSG = 'Web Http Error'
+/** @internal */
 const DEFAULT_ERROR_STATUS_CODE = 500
+/** @internal */
 const DEFAULT_ERROR_CODE = 'WebHttp::UNKWON'
 
 /**
@@ -16,11 +19,11 @@ export class WebHttpError extends Error {
   /**
    * Flag to identify if error is a custom error.
    */
-  _isCustomError = true
+  readonly _isCustomError = true
   /**
    * Flag to identoify if error is a WebHttpError.
    */
-  _isWebHttpError = true
+  readonly _isWebHttpError = true
   /**
    * API Error's message string.
    */
@@ -50,10 +53,10 @@ export class WebHttpError extends Error {
    * Creates an instance of WebHttpError.
    *
    * @constructor
-   * @param [e] AxiosError instance to wrap with WebHttpError.
-   * @param [eMap] ErrorMap to rewrap error for better understanding.
+   * @param [e] AxiosError instance or error object from response body to wrap with WebHttpError.
+   * @param [eMap] WebHttpErrorMap to rewrap error for better understanding.
    */
-  constructor(e?: AxiosError | any, eMap?: ErrorMap) {
+  constructor(e?: AxiosError | any, eMap?: WebHttpErrorMap) {
     super()
 
     this.message = eMap?.message || e?.message || DEFAULT_ERROR_MSG

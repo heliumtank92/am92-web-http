@@ -14,9 +14,9 @@ import {
   WebHttpConfig,
   WebHttpRequestOptions,
   WebHttpResponse,
-  WebHttpInterceptors
+  WebHttpInterceptors,
+  WebHttpErrorMap
 } from './TYPES'
-import { ErrorMap } from './INTERNAL_TYPES'
 import { WEB_HTTP_CONTEXT, WEB_HTTP_REQ_HEADERS } from './CONSTANTS'
 
 /**
@@ -47,8 +47,8 @@ export default class WebHttp {
    * Creates an instance of WebHttp.
    *
    * @constructor
-   * @param [webHttpAxiosConfig] axios and axios-retry config to be associated with the axios client.
-   * @param [webHttpConfig] webHttpConfig to be initialized at WebHttp instance level for all API requests.
+   * @param [webHttpAxiosConfig] axios and axios-retry config to be associated with the axios client. Defaults to {@link DefaultWebHttpConfig}
+   * @param [webHttpConfig] webHttpConfig to be initialized at WebHttp instance level for all API requests. Defaults to {@link DefaultWebHttpConfig}
    */
   constructor(
     webHttpAxiosConfig?: WebHttpAxiosConfig,
@@ -89,20 +89,23 @@ export default class WebHttp {
    * Method to make API call.
    *
    * @async
-   * @param options
+   * @param options Axios request options to define the API call.
    * @throws {WebHttpError}
    * @returns
    */
   async request(options: WebHttpRequestOptions): Promise<WebHttpResponse> {
-    const { webHttpConfig = {} } = options
-    options.webHttpContext = this.context
-    options.webHttpConfig = {
-      ...this.webHttpConfig,
-      ...webHttpConfig
+    const { webHttpConfig = {}, ...restOptions } = options
+    const requestOptions = {
+      ...restOptions,
+      webHttpContext: this.context,
+      webHttpConfig: {
+        ...this.webHttpConfig,
+        ...webHttpConfig
+      }
     }
 
     const response: WebHttpResponse = await this.client
-      .request(options)
+      .request(requestOptions)
       .catch(async (e: WebHttpAxiosError) => {
         const { request, response } = e
         // Handle Axios Response Error
@@ -118,7 +121,7 @@ export default class WebHttp {
             return await this.request(options)
           }
 
-          const eMap: ErrorMap = {
+          const eMap: WebHttpErrorMap = {
             statusCode: statusCode || status,
             message: message || statusText,
             errorCode
@@ -128,7 +131,7 @@ export default class WebHttp {
 
         // Handle Axios Request Error
         if (request) {
-          const eMap: ErrorMap = {
+          const eMap: WebHttpErrorMap = {
             statusCode: -1,
             errorCode: 'WebHttp::NETWORK'
           }
@@ -136,7 +139,7 @@ export default class WebHttp {
         }
 
         // Handle any other form of error
-        const eMap: ErrorMap = {
+        const eMap: WebHttpErrorMap = {
           statusCode: -2,
           errorCode: 'WebHttp::UNKWON'
         }
@@ -147,7 +150,7 @@ export default class WebHttp {
 
   /**
    * Internal function to initialize default axios interceptors.
-   * @private
+   * @internal
    */
   _useDefaultInterceptors() {
     const { disableCrypto, disableHeaderInjection } = this.webHttpConfig
