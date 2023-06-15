@@ -15,7 +15,7 @@ customElements.define('compodoc-menu', class extends HTMLElement {
         <nav>
             <ul class="list">
                 <li class="title">
-                    <a href="index.html" data-type="index-link">WebHttp</a>
+                    <a href="index.html" data-type="index-link">JoseCryptoSubtle</a>
                 </li>
 
                 <li class="divider"></li>
@@ -74,6 +74,9 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                             <span class="icon ion-ios-arrow-down"></span>
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
+                            <li class="link">
+                                <a href="interfaces/InternalAxiosRequestConfig.html" data-type="entity-link" >InternalAxiosRequestConfig</a>
+                            </li>
                             <li class="link">
                                 <a href="interfaces/WebHttpAxiosConfig.html" data-type="entity-link" >WebHttpAxiosConfig</a>
                             </li>

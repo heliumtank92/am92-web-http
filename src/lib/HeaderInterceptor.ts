@@ -9,7 +9,7 @@ import {
 
 /**
  * Axios request-response interceptors for custom header injections.
- * @internal
+ * @ignore
  */
 const HeaderInterceptor = {
   request: [requestSuccess],
@@ -21,7 +21,7 @@ export default HeaderInterceptor
 /**
  * onFulfilled handler for Axios Request Interceptor.
  *
- * @internal
+ * @ignore
  * @param config
  * @returns
  */
@@ -79,7 +79,7 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
 /**
  * onFulfilled handler for Axios Response Interceptor.
  *
- * @internal
+ * @ignore
  * @param response
  * @returns
  */
@@ -101,7 +101,7 @@ function responseSuccess(response: WebHttpResponse): WebHttpResponse {
 /**
  * onRejected handler for Axios Response Interceptor.
  *
- * @internal
+ * @ignore
  * @param error
  * @returns
  */
@@ -124,7 +124,7 @@ function responseError(error: any): any {
 /**
  * Internal function to extract response headers.
  *
- * @internal
+ * @ignore
  * @param webHttpContext
  * @param headers
  */
@@ -155,7 +155,7 @@ function _extractResponseHeaders(
 /**
  * Internal function to inject request headers.
  *
- * @internal
+ * @ignore
  * @param config
  * @param webHttpContext
  * @param headerKey

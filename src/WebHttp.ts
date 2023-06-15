@@ -150,7 +150,7 @@ export default class WebHttp {
 
   /**
    * Internal function to initialize default axios interceptors.
-   * @internal
+   * @ignore
    */
   _useDefaultInterceptors() {
     const { disableCrypto, disableHeaderInjection } = this.webHttpConfig
