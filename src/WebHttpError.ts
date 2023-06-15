@@ -1,21 +1,62 @@
 import { AxiosError } from 'axios'
-import { ErrorMap } from './INTERNAL_TYPES'
+import { WebHttpErrorMap } from './TYPES'
 
+/** @internal */
 const DEFAULT_ERROR_MSG = 'Web Http Error'
+/** @internal */
 const DEFAULT_ERROR_STATUS_CODE = 500
+/** @internal */
 const DEFAULT_ERROR_CODE = 'WebHttp::UNKWON'
 
-export default class WebHttpError extends Error {
+/**
+ * Error class whose instance is thrown in case of any error.
+ *
+ * @class
+ * @typedef {WebHttpError}
+ * @extends {Error}
+ */
+export class WebHttpError extends Error {
+  /**
+   * Flag to identify if error is a custom error.
+   */
   readonly _isCustomError = true
+  /**
+   * Flag to identoify if error is a WebHttpError.
+   */
   readonly _isWebHttpError = true
-  readonly message: string
-  readonly statusCode: number
-  readonly errorCode: string
-  readonly code?: string
-  readonly data?: any
-  readonly error: any
+  /**
+   * API Error's message string.
+   */
+  message: string
+  /**
+   * API Error's HTTP status code.
+   */
+  statusCode: number
+  /**
+   * API Error's error code as sent by backend.
+   */
+  errorCode: string
+  /**
+   * API Error's error code as sent by backend.
+   */
+  code?: string
+  /**
+   * API Error's data object if sent with error.
+   */
+  data?: any
+  /**
+   * API Error's error object.
+   */
+  error?: any
 
-  constructor(e?: AxiosError | any, eMap?: ErrorMap) {
+  /**
+   * Creates an instance of WebHttpError.
+   *
+   * @constructor
+   * @param [e] AxiosError instance or error object from response body to wrap with WebHttpError.
+   * @param [eMap] WebHttpErrorMap to rewrap error for better understanding.
+   */
+  constructor(e?: AxiosError | any, eMap?: WebHttpErrorMap) {
     super()
 
     this.message = eMap?.message || e?.message || DEFAULT_ERROR_MSG

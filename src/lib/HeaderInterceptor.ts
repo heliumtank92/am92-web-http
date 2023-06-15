@@ -1,8 +1,16 @@
 import { RawAxiosResponseHeaders } from 'axios'
 
 import { WebHttpContext, WebHttpRequestConfig, WebHttpResponse } from '../TYPES'
-import { WEB_HTTP_CONTEXT, WEB_HTTP_HEADERS } from '../CONSTANTS'
+import {
+  WEB_HTTP_CONTEXT,
+  WEB_HTTP_REQ_HEADERS,
+  WEB_HTTP_RES_HEADERS
+} from '../CONSTANTS'
 
+/**
+ * Axios request-response interceptors for custom header injections.
+ * @internal
+ */
 const HeaderInterceptor = {
   request: [requestSuccess],
   response: [responseSuccess, responseError]
@@ -10,6 +18,13 @@ const HeaderInterceptor = {
 
 export default HeaderInterceptor
 
+/**
+ * onFulfilled handler for Axios Request Interceptor.
+ *
+ * @internal
+ * @param config
+ * @returns
+ */
 function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
   const axiosRetry = config['axios-retry']
   if (axiosRetry) {
@@ -30,13 +45,13 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
   _appendHeaderFormContext(
     config,
     webHttpContext,
-    WEB_HTTP_HEADERS.REQ.SESSION_ID,
+    WEB_HTTP_REQ_HEADERS.SESSION_ID,
     WEB_HTTP_CONTEXT.SESSION_ID
   )
   _appendHeaderFormContext(
     config,
     webHttpContext,
-    WEB_HTTP_HEADERS.REQ.API_KEY,
+    WEB_HTTP_REQ_HEADERS.API_KEY,
     WEB_HTTP_CONTEXT.API_KEY
   )
   _appendHeaderFormContext(
@@ -48,19 +63,26 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
   _appendHeaderFormContext(
     config,
     webHttpContext,
-    WEB_HTTP_HEADERS.REQ.CLIENT_ID,
+    WEB_HTTP_REQ_HEADERS.CLIENT_ID,
     WEB_HTTP_CONTEXT.CLIENT_ID
   )
 
-  config.headers[WEB_HTTP_HEADERS.REQ.REQUEST_ID] = window.crypto.randomUUID()
+  config.headers[WEB_HTTP_REQ_HEADERS.REQUEST_ID] = window.crypto.randomUUID()
 
   if (encryptedEncryptionKey) {
-    config.headers[WEB_HTTP_HEADERS.REQ.ENCRYPTION_KEY] = encryptedEncryptionKey
+    config.headers[WEB_HTTP_REQ_HEADERS.ENCRYPTION_KEY] = encryptedEncryptionKey
   }
 
   return config
 }
 
+/**
+ * onFulfilled handler for Axios Response Interceptor.
+ *
+ * @internal
+ * @param response
+ * @returns
+ */
 function responseSuccess(response: WebHttpResponse): WebHttpResponse {
   const { headers, config } = response
   const {
@@ -76,8 +98,16 @@ function responseSuccess(response: WebHttpResponse): WebHttpResponse {
   return response
 }
 
-function responseError(response: WebHttpResponse) {
-  const { headers, config } = response
+/**
+ * onRejected handler for Axios Response Interceptor.
+ *
+ * @internal
+ * @param error
+ * @returns
+ */
+function responseError(error: any): any {
+  const { response, config } = error
+  const { headers } = response
 
   const {
     webHttpContext,
@@ -88,33 +118,49 @@ function responseError(response: WebHttpResponse) {
     _extractResponseHeaders(webHttpContext, headers)
   }
 
-  return response
+  throw error
 }
 
+/**
+ * Internal function to extract response headers.
+ *
+ * @internal
+ * @param webHttpContext
+ * @param headers
+ */
 function _extractResponseHeaders(
   webHttpContext: WebHttpContext,
   headers: RawAxiosResponseHeaders
 ) {
-  const accessToken = headers[WEB_HTTP_HEADERS.RES.ACCESS_TOKEN] as string
+  const accessToken = headers[WEB_HTTP_RES_HEADERS.ACCESS_TOKEN] as string
   if (accessToken) {
     webHttpContext.set(WEB_HTTP_CONTEXT.ACCESS_TOKEN, accessToken)
   } else {
-    const authToken = headers[WEB_HTTP_HEADERS.RES.AUTH_TOKEN] as string
+    const authToken = headers[WEB_HTTP_RES_HEADERS.AUTH_TOKEN] as string
     if (authToken) {
       webHttpContext.set(WEB_HTTP_CONTEXT.ACCESS_TOKEN, authToken)
       webHttpContext.set(
         WEB_HTTP_CONTEXT.AUTHENTICATION_TOKEN_KEY,
-        WEB_HTTP_HEADERS.REQ.AUTH_TOKEN
+        WEB_HTTP_REQ_HEADERS.AUTH_TOKEN
       )
     }
   }
 
-  const refreshToken = headers[WEB_HTTP_HEADERS.RES.ACCESS_TOKEN] as string
+  const refreshToken = headers[WEB_HTTP_RES_HEADERS.ACCESS_TOKEN] as string
   if (refreshToken) {
     webHttpContext.set(WEB_HTTP_CONTEXT.REFRESH_TOKEN, refreshToken)
   }
 }
 
+/**
+ * Internal function to inject request headers.
+ *
+ * @internal
+ * @param config
+ * @param webHttpContext
+ * @param headerKey
+ * @param contextkey
+ */
 function _appendHeaderFormContext(
   config: WebHttpRequestConfig,
   webHttpContext: WebHttpContext,
