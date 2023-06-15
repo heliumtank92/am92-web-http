@@ -1,11 +1,11 @@
 import { AxiosError } from 'axios'
 import { WebHttpErrorMap } from './TYPES'
 
-/** @internal */
+/** @ignore */
 const DEFAULT_ERROR_MSG = 'Web Http Error'
-/** @internal */
+/** @ignore */
 const DEFAULT_ERROR_STATUS_CODE = 500
-/** @internal */
+/** @ignore */
 const DEFAULT_ERROR_CODE = 'WebHttp::UNKWON'
 
 /**

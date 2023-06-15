@@ -155,7 +155,7 @@ export interface WebHttpInterceptors {
   response: AxiosInterceptorManager<WebHttpResponse>
 }
 
-/** @internal */
+/** @ignore */
 declare module 'axios' {
   interface InternalAxiosRequestConfig {
     webHttpConfig: WebHttpConfig

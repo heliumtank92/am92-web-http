@@ -6,7 +6,7 @@ import { WEB_HTTP_CONTEXT } from '../CONSTANTS'
 
 /**
  * Axios request-response interceptors for payload encryption using JOSE.
- * @internal
+ * @ignore
  */
 const CryptoInterceptor = {
   request: [requestSuccess],
@@ -18,7 +18,7 @@ export default CryptoInterceptor
 /**
  * onFulfilled handler for Axios Request Interceptor.
  *
- * @internal
+ * @ignore
  * @async
  * @param config
  * @returns
@@ -57,7 +57,7 @@ async function requestSuccess(
 /**
  * onFulfilled handler for Axios Response Interceptor.
  *
- * @internal
+ * @ignore
  * @async
  * @param response
  * @returns
@@ -91,7 +91,7 @@ async function responseSuccess(
 /**
  * Internal function which handles Errors from Encrypted Response Body.
  *
- * @internal
+ * @ignore
  * @param response
  * @returns
  * @throws {AxiosError}

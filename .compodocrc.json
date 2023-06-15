@@ -2,7 +2,7 @@
   "include": ["src/**/*.ts"],
   "exclude": ["src/test.ts", "src/**/*.spec.ts", "src/app/file-to-exclude.ts"],
   "output": "docs",
-  "name": "WebHttp",
+  "name": "JoseCryptoSubtle",
   "silent": true,
   "hideGenerator": true,
   "disableSourceCode": true,
