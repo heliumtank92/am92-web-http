@@ -75,9 +75,6 @@ customElements.define('compodoc-menu', class extends HTMLElement {
                         </div>
                         <ul class="links collapse " ${ isNormalMode ? ' id="interfaces-links"' : 'id="xs-interfaces-links"' }>
                             <li class="link">
-                                <a href="interfaces/InternalAxiosRequestConfig.html" data-type="entity-link" >InternalAxiosRequestConfig</a>
-                            </li>
-                            <li class="link">
                                 <a href="interfaces/WebHttpAxiosConfig.html" data-type="entity-link" >WebHttpAxiosConfig</a>
                             </li>
                             <li class="link">
