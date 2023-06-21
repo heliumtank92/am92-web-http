@@ -15,9 +15,9 @@
     "build:clean": "rm -rf ./dist",
     "build": "npm-run-all build:clean compile",
     "test": "echo 'Error: no test specified'",
-    "preversion": "npm-run-all build test",
+    "preversion": "npm-run-all build test generate:docs",
     "version": "echo 'Versioning'",
-    "postversion": "git push && git push --tags && npm run generate:docs && npm run publish:pkg",
+    "postversion": "git push && git push --tags && npm run publish:pkg",
     "publish:pkg": "npm publish",
     "generate:docs": "npx compodoc -p tsconfig.json"
   },
