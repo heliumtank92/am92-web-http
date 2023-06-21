@@ -146,7 +146,7 @@ function _extractResponseHeaders(
     }
   }
 
-  const refreshToken = headers[WEB_HTTP_RES_HEADERS.ACCESS_TOKEN] as string
+  const refreshToken = headers[WEB_HTTP_RES_HEADERS.REFRESH_TOKEN] as string
   if (refreshToken) {
     webHttpContext.set(WEB_HTTP_CONTEXT.REFRESH_TOKEN, refreshToken)
   }
