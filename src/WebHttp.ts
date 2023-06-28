@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
+import { randomId } from '@am92/utils-string'
 
 import CryptoInterceptor from './lib/CryptoInterceptor'
 import HeaderInterceptor from './lib/HeaderInterceptor'
@@ -17,6 +18,7 @@ import {
   WebHttpInterceptors,
   WebHttpErrorMap
 } from './TYPES'
+
 import { WEB_HTTP_CONTEXT, WEB_HTTP_REQ_HEADERS } from './CONSTANTS'
 
 /**
@@ -64,7 +66,7 @@ export default class WebHttp {
 
     // WebHttp Context for all request at session level
     this.context = new Map([
-      [WEB_HTTP_CONTEXT.SESSION_ID, window.crypto.randomUUID()],
+      [WEB_HTTP_CONTEXT.SESSION_ID, randomId(20)],
       [WEB_HTTP_CONTEXT.API_KEY, ''],
       [WEB_HTTP_CONTEXT.ACCESS_TOKEN, ''],
       [WEB_HTTP_CONTEXT.REFRESH_TOKEN, ''],

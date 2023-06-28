@@ -15,8 +15,8 @@
     "build:clean": "rm -rf ./dist",
     "build": "npm-run-all build:clean compile",
     "test": "echo 'Error: no test specified'",
-    "preversion": "npm-run-all build test generate:docs commit:docs",
-    "version": "echo 'Versioning'",
+    "preversion": "npm-run-all build test",
+    "version": "generate:docs commit:docs",
     "postversion": "git push && git push --tags && npm run publish:pkg",
     "publish:pkg": "npm publish",
     "generate:docs": "npx compodoc -p tsconfig.json",
@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@am92/jose-crypto-subtle": "^2.0.9",
+    "@am92/utils-string": "^2.0.2",
     "axios": "^1.4.0",
     "axios-retry": "^3.5.0"
   },

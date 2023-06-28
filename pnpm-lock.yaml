@@ -8,6 +8,9 @@ dependencies:
   '@am92/jose-crypto-subtle':
     specifier: ^2.0.9
     version: 2.0.9
+  '@am92/utils-string':
+    specifier: ^2.0.2
+    version: 2.0.2
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -37,6 +40,10 @@ packages:
 
   /@am92/jose-crypto-subtle@2.0.9:
     resolution: {integrity: sha512-6zvS9ADyP5SN7PemPZBIH1V8l1HQtAzbyyekY36ThBFivFITYVts64sQLfR+6HfioovtT8crKDQndYT5PiqbiQ==}
+    dev: false
+
+  /@am92/utils-string@2.0.2:
+    resolution: {integrity: sha512-IjlaLitW4MVd4l4lfidf4szAofB+rtkkYTUjycgQxogjKZoZz/AwZ01FQN1PiyK2a9xn3HpvgkuT94QcB1xZMw==}
     dev: false
 
   /@ampproject/remapping@2.2.1:

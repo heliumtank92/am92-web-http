@@ -6,6 +6,7 @@ import {
   WEB_HTTP_REQ_HEADERS,
   WEB_HTTP_RES_HEADERS
 } from '../CONSTANTS'
+import { randomId } from '@am92/utils-string'
 
 /**
  * Axios request-response interceptors for custom header injections.
@@ -67,7 +68,7 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
     WEB_HTTP_CONTEXT.CLIENT_ID
   )
 
-  config.headers[WEB_HTTP_REQ_HEADERS.REQUEST_ID] = window.crypto.randomUUID()
+  config.headers[WEB_HTTP_REQ_HEADERS.REQUEST_ID] = randomId(20)
 
   if (encryptedEncryptionKey) {
     config.headers[WEB_HTTP_REQ_HEADERS.ENCRYPTION_KEY] = encryptedEncryptionKey
