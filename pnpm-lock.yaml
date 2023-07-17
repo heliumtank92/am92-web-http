@@ -9,8 +9,8 @@ dependencies:
     specifier: ^2.0.9
     version: 2.0.9
   '@am92/utils-string':
-    specifier: ^2.0.2
-    version: 2.0.2
+    specifier: ^2.0.3
+    version: 2.0.3
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -42,8 +42,8 @@ packages:
     resolution: {integrity: sha512-6zvS9ADyP5SN7PemPZBIH1V8l1HQtAzbyyekY36ThBFivFITYVts64sQLfR+6HfioovtT8crKDQndYT5PiqbiQ==}
     dev: false
 
-  /@am92/utils-string@2.0.2:
-    resolution: {integrity: sha512-IjlaLitW4MVd4l4lfidf4szAofB+rtkkYTUjycgQxogjKZoZz/AwZ01FQN1PiyK2a9xn3HpvgkuT94QcB1xZMw==}
+  /@am92/utils-string@2.0.3:
+    resolution: {integrity: sha512-IYORGQqIe8h3O4m3CyALAnUhI2+IamknURMqZFxNSu/uIIOVBGwJTT7gKTrHVV/8dl4JIFcHkWU1aG1MWUBphg==}
     dev: false
 
   /@ampproject/remapping@2.2.1:

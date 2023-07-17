@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@am92/jose-crypto-subtle": "^2.0.9",
-    "@am92/utils-string": "^2.0.2",
+    "@am92/utils-string": "^2.0.3",
     "axios": "^1.4.0",
     "axios-retry": "^3.5.0"
   },
