@@ -20,6 +20,7 @@ import {
 } from './TYPES'
 
 import { WEB_HTTP_CONTEXT, WEB_HTTP_REQ_HEADERS } from './CONSTANTS'
+import { DEFAULT_REQUEST_ERROR } from './CONSTANTS/ERRORS'
 
 /**
  * HTTP Client Class.
@@ -116,9 +117,8 @@ export default class WebHttp {
           const body: any = response.data as any
           const { statusCode, message, error, errorCode } = body || {}
 
-          const { publicKey } = error
-
           if (errorCode === 'ApiCrypto::PRIVATE_KEY_NOT_FOUND') {
+            const { publicKey = '' } = error || {}
             this.context.set(WEB_HTTP_CONTEXT.PUBLIC_KEY, publicKey)
             return await this.request(options)
           }
@@ -133,27 +133,16 @@ export default class WebHttp {
 
         // Handle Axios Request Error
         if (request) {
-          const eMap: WebHttpErrorMap = {
-            statusCode: -1,
-            errorCode: 'WebHttp::NETWORK'
-          }
-          throw new WebHttpError(e, eMap)
+          throw new WebHttpError(e, DEFAULT_REQUEST_ERROR)
         }
 
         // Handle any other form of error
-        const eMap: WebHttpErrorMap = {
-          statusCode: -2,
-          errorCode: 'WebHttp::UNKWON'
-        }
-        throw new WebHttpError(e, eMap)
+        throw new WebHttpError(e)
       })
     return response
   }
 
-  /**
-   * Internal function to initialize default axios interceptors.
-   * @ignore
-   */
+  /** @ignore */
   _useDefaultInterceptors() {
     const { disableCrypto, disableHeaderInjection } = this.webHttpConfig
 

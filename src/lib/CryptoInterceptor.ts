@@ -1,13 +1,12 @@
 import { AxiosError } from 'axios'
 import JoseCryptoSubtle from '@am92/jose-crypto-subtle'
+import { WebHttpError } from '../WebHttpError'
 
 import { WebHttpRequestConfig, WebHttpResponse } from '../TYPES'
 import { WEB_HTTP_CONTEXT } from '../CONSTANTS'
+import { MISSING_PUBLIC_KEY_ERROR } from '../CONSTANTS/ERRORS'
 
-/**
- * Axios request-response interceptors for payload encryption using JOSE.
- * @ignore
- */
+/** @ignore */
 const CryptoInterceptor = {
   request: [requestSuccess],
   response: [responseSuccess]
@@ -15,14 +14,7 @@ const CryptoInterceptor = {
 
 export default CryptoInterceptor
 
-/**
- * onFulfilled handler for Axios Request Interceptor.
- *
- * @ignore
- * @async
- * @param config
- * @returns
- */
+/** @ignore */
 async function requestSuccess(
   config: WebHttpRequestConfig
 ): Promise<WebHttpRequestConfig> {
@@ -32,10 +24,13 @@ async function requestSuccess(
   }
 
   const { webHttpContext, webHttpConfig, data } = config
-  const publicKey = webHttpContext.get(WEB_HTTP_CONTEXT.PUBLIC_KEY) as string
-
   if (webHttpConfig.disableCrypto) {
     return config
+  }
+
+  const publicKey = webHttpContext.get(WEB_HTTP_CONTEXT.PUBLIC_KEY) as string
+  if (!publicKey) {
+    throw new WebHttpError(undefined, MISSING_PUBLIC_KEY_ERROR)
   }
 
   // Generate and Manage Keys
@@ -54,14 +49,7 @@ async function requestSuccess(
   return config
 }
 
-/**
- * onFulfilled handler for Axios Response Interceptor.
- *
- * @ignore
- * @async
- * @param response
- * @returns
- */
+/** @ignore */
 async function responseSuccess(
   response: WebHttpResponse
 ): Promise<WebHttpResponse> {
@@ -88,14 +76,7 @@ async function responseSuccess(
   return response
 }
 
-/**
- * Internal function which handles Errors from Encrypted Response Body.
- *
- * @ignore
- * @param response
- * @returns
- * @throws {AxiosError}
- */
+/** @ignore */
 function handleEncryptedErrorResponse(response: WebHttpResponse): void {
   const { data: body, config, request } = response
   const { statusCode, status, message } = body

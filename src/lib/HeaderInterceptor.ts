@@ -8,10 +8,7 @@ import {
 } from '../CONSTANTS'
 import { randomId } from '@am92/utils-string'
 
-/**
- * Axios request-response interceptors for custom header injections.
- * @ignore
- */
+/** @ignore */
 const HeaderInterceptor = {
   request: [requestSuccess],
   response: [responseSuccess, responseError]
@@ -19,13 +16,7 @@ const HeaderInterceptor = {
 
 export default HeaderInterceptor
 
-/**
- * onFulfilled handler for Axios Request Interceptor.
- *
- * @ignore
- * @param config
- * @returns
- */
+/** @ignore */
 function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
   const axiosRetry = config['axios-retry']
   if (axiosRetry) {
@@ -77,13 +68,7 @@ function requestSuccess(config: WebHttpRequestConfig): WebHttpRequestConfig {
   return config
 }
 
-/**
- * onFulfilled handler for Axios Response Interceptor.
- *
- * @ignore
- * @param response
- * @returns
- */
+/** @ignore */
 function responseSuccess(response: WebHttpResponse): WebHttpResponse {
   const { headers, config } = response
   const {
@@ -99,36 +84,27 @@ function responseSuccess(response: WebHttpResponse): WebHttpResponse {
   return response
 }
 
-/**
- * onRejected handler for Axios Response Interceptor.
- *
- * @ignore
- * @param error
- * @returns
- */
+/** @ignore */
 function responseError(error: any): any {
   const { response, config } = error
-  const { headers } = response
 
-  const {
-    webHttpContext,
-    webHttpConfig: { disableHeaderInjection }
-  } = config
+  if (response) {
+    const { headers } = response
 
-  if (!disableHeaderInjection) {
-    _extractResponseHeaders(webHttpContext, headers)
+    const {
+      webHttpContext,
+      webHttpConfig: { disableHeaderInjection }
+    } = config
+
+    if (!disableHeaderInjection) {
+      _extractResponseHeaders(webHttpContext, headers)
+    }
   }
 
   throw error
 }
 
-/**
- * Internal function to extract response headers.
- *
- * @ignore
- * @param webHttpContext
- * @param headers
- */
+/** @ignore */
 function _extractResponseHeaders(
   webHttpContext: WebHttpContext,
   headers: RawAxiosResponseHeaders
@@ -153,15 +129,7 @@ function _extractResponseHeaders(
   }
 }
 
-/**
- * Internal function to inject request headers.
- *
- * @ignore
- * @param config
- * @param webHttpContext
- * @param headerKey
- * @param contextkey
- */
+/** @ignore */
 function _appendHeaderFormContext(
   config: WebHttpRequestConfig,
   webHttpContext: WebHttpContext,
