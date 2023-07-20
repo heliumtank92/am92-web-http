@@ -8,7 +8,7 @@ export const WEB_HTTP_REQ_HEADERS = {
   AUTH_TOKEN: 'x-authtoken',
   ACCESS_TOKEN: 'x-access-token',
   ENCRYPTION_KEY: 'x-api-encryption-key',
-  CLIENT_ID: 'x-client-id'
+  CLIENT_ID: 'x-api-client-id'
 } as const
 
 /**

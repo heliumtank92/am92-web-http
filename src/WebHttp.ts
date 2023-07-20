@@ -1,5 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
 import axiosRetry from 'axios-retry'
+import { randomId } from '@am92/utils-string'
 
 import CryptoInterceptor from './lib/CryptoInterceptor'
 import HeaderInterceptor from './lib/HeaderInterceptor'
@@ -17,7 +18,9 @@ import {
   WebHttpInterceptors,
   WebHttpErrorMap
 } from './TYPES'
+
 import { WEB_HTTP_CONTEXT, WEB_HTTP_REQ_HEADERS } from './CONSTANTS'
+import { DEFAULT_REQUEST_ERROR } from './CONSTANTS/ERRORS'
 
 /**
  * HTTP Client Class.
@@ -64,7 +67,7 @@ export default class WebHttp {
 
     // WebHttp Context for all request at session level
     this.context = new Map([
-      [WEB_HTTP_CONTEXT.SESSION_ID, window.crypto.randomUUID()],
+      [WEB_HTTP_CONTEXT.SESSION_ID, randomId(20)],
       [WEB_HTTP_CONTEXT.API_KEY, ''],
       [WEB_HTTP_CONTEXT.ACCESS_TOKEN, ''],
       [WEB_HTTP_CONTEXT.REFRESH_TOKEN, ''],
@@ -114,9 +117,8 @@ export default class WebHttp {
           const body: any = response.data as any
           const { statusCode, message, error, errorCode } = body || {}
 
-          const { publicKey } = error
-
           if (errorCode === 'ApiCrypto::PRIVATE_KEY_NOT_FOUND') {
+            const { publicKey = '' } = error || {}
             this.context.set(WEB_HTTP_CONTEXT.PUBLIC_KEY, publicKey)
             return await this.request(options)
           }
@@ -131,27 +133,16 @@ export default class WebHttp {
 
         // Handle Axios Request Error
         if (request) {
-          const eMap: WebHttpErrorMap = {
-            statusCode: -1,
-            errorCode: 'WebHttp::NETWORK'
-          }
-          throw new WebHttpError(e, eMap)
+          throw new WebHttpError(e, DEFAULT_REQUEST_ERROR)
         }
 
         // Handle any other form of error
-        const eMap: WebHttpErrorMap = {
-          statusCode: -2,
-          errorCode: 'WebHttp::UNKWON'
-        }
-        throw new WebHttpError(e, eMap)
+        throw new WebHttpError(e)
       })
     return response
   }
 
-  /**
-   * Internal function to initialize default axios interceptors.
-   * @ignore
-   */
+  /** @ignore */
   _useDefaultInterceptors() {
     const { disableCrypto, disableHeaderInjection } = this.webHttpConfig
 

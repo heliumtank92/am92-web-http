@@ -6,8 +6,11 @@ settings:
 
 dependencies:
   '@am92/jose-crypto-subtle':
-    specifier: ^2.0.4
-    version: 2.0.4
+    specifier: ^2.0.9
+    version: 2.0.9
+  '@am92/utils-string':
+    specifier: ^2.0.3
+    version: 2.0.3
   axios:
     specifier: ^1.4.0
     version: 1.4.0
@@ -35,8 +38,12 @@ packages:
     resolution: {integrity: sha512-KI2nVf9JdwWCXqK6RVf+9/096G7VWN4Z84mnynlyZKao2xQENW8WNEjLmvdlxS5X8PNWXFC1zqwm7tveOXw/4A==}
     dev: true
 
-  /@am92/jose-crypto-subtle@2.0.4:
-    resolution: {integrity: sha512-uTX7mLzWnDmmmnd7pzwhFSUYiu7eS8oQFUOPCua5SpPx2vsK5i8gl/ge8MNVcsyGHvpXoL41o4MMC4txBz2MoA==}
+  /@am92/jose-crypto-subtle@2.0.9:
+    resolution: {integrity: sha512-6zvS9ADyP5SN7PemPZBIH1V8l1HQtAzbyyekY36ThBFivFITYVts64sQLfR+6HfioovtT8crKDQndYT5PiqbiQ==}
+    dev: false
+
+  /@am92/utils-string@2.0.3:
+    resolution: {integrity: sha512-IYORGQqIe8h3O4m3CyALAnUhI2+IamknURMqZFxNSu/uIIOVBGwJTT7gKTrHVV/8dl4JIFcHkWU1aG1MWUBphg==}
     dev: false
 
   /@ampproject/remapping@2.2.1:
