@@ -23,7 +23,7 @@
     "commit:docs": "git add docs && git commit -m 'Docs Updated'"
   },
   "dependencies": {
-    "@am92/jose-crypto-subtle": "^2.0.10",
+    "@am92/jose-crypto-subtle": "^2.0.11",
     "@am92/utils-string": "^2.0.3",
     "axios": "1.4.0",
     "axios-retry": "3.5.1"
