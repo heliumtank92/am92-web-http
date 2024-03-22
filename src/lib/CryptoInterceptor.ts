@@ -35,9 +35,12 @@ async function requestSuccess(
 
   // Generate and Manage Keys
   const { encryptionKey, encryptedEncryptionKey } =
-    await JoseCryptoSubtle.generateAndWrapKey(publicKey)
-  config.webHttpConfig.encryptionKey = encryptionKey
-  config.webHttpConfig.encryptedEncryptionKey = encryptedEncryptionKey
+  !!webHttpConfig.encryptionKey && !!webHttpConfig.encryptedEncryptionKey
+    ? {
+        encryptionKey: webHttpConfig.encryptionKey,
+        encryptedEncryptionKey: webHttpConfig.encryptedEncryptionKey,
+      }
+    : await JoseCryptoSubtle.generateAndWrapKey(publicKey);
 
   // Encrypt Body
   if (data) {
