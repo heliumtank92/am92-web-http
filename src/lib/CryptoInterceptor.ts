@@ -28,14 +28,23 @@ async function requestSuccess(
     return config
   }
 
-  const publicKey = webHttpContext.get(WEB_HTTP_CONTEXT.PUBLIC_KEY) as string
-  if (!publicKey) {
-    throw new WebHttpError(undefined, MISSING_PUBLIC_KEY_ERROR)
+  // Use the keys passed
+  let encryptionKey = webHttpConfig.encryptionKey
+  let encryptedEncryptionKey = webHttpConfig.encryptedEncryptionKey
+
+  if (!encryptionKey || !encryptedEncryptionKey) {
+    // Need Public Key for generating new keys
+    const publicKey = webHttpContext.get(WEB_HTTP_CONTEXT.PUBLIC_KEY) as string
+    if (!publicKey) {
+      throw new WebHttpError(undefined, MISSING_PUBLIC_KEY_ERROR)
+    }
+
+    // Generate and Manage Keys
+    const keys = await JoseCryptoSubtle.generateAndWrapKey(publicKey)
+    encryptionKey = keys.encryptionKey
+    encryptedEncryptionKey = keys.encryptedEncryptionKey
   }
 
-  // Generate and Manage Keys
-  const { encryptionKey, encryptedEncryptionKey } =
-    await JoseCryptoSubtle.generateAndWrapKey(publicKey)
   config.webHttpConfig.encryptionKey = encryptionKey
   config.webHttpConfig.encryptedEncryptionKey = encryptedEncryptionKey
 
