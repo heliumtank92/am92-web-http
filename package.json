@@ -26,7 +26,7 @@
     "@am92/jose-crypto-subtle": "^2.0.11",
     "@am92/utils-string": "^2.0.3",
     "axios": "1.4.0",
-    "axios-retry": "3.5.1"
+    "axios-retry": "3.9.1"
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-methods": "^7.18.6",
